@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+    dhiagent:
+        image: dhiway/agent:latest
+        container_name: dhiagent
+        environment:
+            - PORT=${STUDIO_PORT}
+            - STUDIO_URL=${PUBLIC_URL}
+            - TYPEORM_HOST=${STUDIO_TYPEORM_HOST}
+            - TYPEORM_PORT=${TYPEORM_PORT}
+            - TYPEORM_USERNAME=${STUDIO_TYPEORM_USERNAME}
+            - TYPEORM_PASSWORD=${STUDIO_TYPEORM_PASSWORD}
+            - TYPEORM_DATABASE=${STUDIO_TYPEORM_DATABASE}
+            - TYPEORM_AUTO_SCHEMA_SYNC=${STUDIO_TYPEORM_AUTO_SCHEMA_SYNC}
+            - TYPEORM_ENTITIES=${STUDIO_TYPEORM_ENTITIES}
+            - TYPEORM_SUBSCRIBERS=${STUDIO_TYPEORM_SUBSCRIBERS}
+            - TYPEORM_MIGRATIONS=${STUDIO_TYPEORM_MIGRATIONS}
+            - TYPEORM_ENTITIES_DIR=${STUDIO_TYPEORM_ENTITIES_DIR}
+            - TYPEORM_MIGRATIONS_DIR=${STUDIO_TYPEORM_MIGRATIONS_DIR}
+            - TYPEORM_SUBSCRIBERS_DIR=${STUDIO_TYPEORM_SUBSCRIBERS_DIR}
+            - TYPEORM_LOGGING=${STUDIO_TYPEORM_LOGGING}
+            - CORD_WSS_URL=${CORD_WSS_URL}
+            - STASH_URI=${STASH_URI}
+            - SIGNING_URI=${SIGNING_URI}
+            - CORD_APPS_URL=${CORD_APPS_URL}
+        ports:
+            - ${STUDIO_PORT}:${STUDIO_PORT}
+        depends_on:
+            - postgres3
+        networks:
+            - local
+        command: npm run start
+
+    postgres3:
+        image: postgres:14.5-alpine
+        container_name: postgres3
+        environment:
+            POSTGRES_USER: ${STUDIO_TYPEORM_USERNAME}
+            POSTGRES_PASSWORD: ${STUDIO_TYPEORM_PASSWORD}
+            POSTGRES_DB: ${STUDIO_TYPEORM_DATABASE}
+            PGDATA: /var/lib/postgresql/data/pgdata
+        ports:
+            - ${STUDIO_TYPEORM_PORT}:${TYPEORM_PORT}
+        restart: always
+        volumes:
+            - postgres-data3:/var/lib/postgresql/data
+        networks:
+            - local
+
+volumes:
+    postgres-data3:
+        name: postgres-data3
+
+networks:
+    local:
+        name: local

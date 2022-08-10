@@ -1,0 +1,787 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "version": "0.0.2",
+        "title": "CORD Agent",
+        "description": "API interface for CORD SDK",
+        "termsOfService": "http://studio.dhiway.com/page/terms-and-conditions",
+        "contact": {
+            "name": "Dhiway Networks",
+            "email": "info@dhiway.com",
+            "url": "https://dhiway.com"
+        },
+        "license": {
+            "name": "Apache v2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5001/",
+            "description": "Local server"
+        },
+        {
+            "url": "https://api.demo.cord.network",
+            "description": "Demo server"
+        }
+    ],
+
+    "paths": {
+        "/api/v1/schemas": {
+            "post": {
+                "tags": ["Schema"],
+                "description": "Create a schema",
+                "operationId": "schemaCreate",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SchemaRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "New schema created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Schema"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "example": {
+                                    "error": "title is required field"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Schema"],
+                "description": "Get all schemas with the Agent",
+                "operationId": "schemaIndex",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "required": false,
+                        "description": "page to fetch (used in pagination"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pageSize",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "required": false,
+                        "description": "number of items to fetch (used in pagination"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of schemas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SchemaListing"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/schemas/{schemaId}": {
+            "get": {
+                "tags": ["Schema"],
+                "description": "Get schema details",
+                "operationId": "schemaShow",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "schemaId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Schema Identity"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Schema details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Schema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/spaces": {
+            "post": {
+                "tags": ["Space"],
+                "description": "Create a space",
+                "operationId": "spaceCreate",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpaceRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "New space created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Space"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "example": {
+                                    "error": "name is required field"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Space"],
+                "description": "Get all spaces with the Agent",
+                "operationId": "spaceIndex",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "required": false,
+                        "description": "page to fetch (used in pagination"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pageSize",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "required": false,
+                        "description": "number of items to fetch (used in pagination"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of spaces",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpaceListing"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/spaces/{spaceId}": {
+            "get": {
+                "tags": ["Space"],
+                "description": "Get space details",
+                "operationId": "spaceShow",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "spaceId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Space Identity"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Space details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Space"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/{spaceId}/records": {
+            "post": {
+                "tags": ["Record"],
+                "description": "Create a Record",
+                "operationId": "recordCreate",
+                "requestBody": {
+                    "description": "Add a record to the given space",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RecordRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "spaceId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Space ID"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New Record created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Record"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "example": {
+                                    "error": "title is required field"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Record"],
+                "description": "Get all records belongs to a space",
+                "operationId": "recordIndex",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "spaceId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Space ID"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "required": false,
+                        "description": "page to fetch (used in pagination"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pageSize",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "required": false,
+                        "description": "number of items to fetch (used in pagination"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of Records",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RecordListing"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/{spaceId}/records/{recordId}": {
+            "get": {
+                "tags": ["Record"],
+                "description": "Record detail",
+                "operationId": "recordShow",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "spaceId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Space ID"
+                    },
+                    {
+                        "in": "path",
+                        "name": "recordId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Record ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Record details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Record"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Record"],
+                "description": "Update a Record",
+                "operationId": "recordUpdate",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RecordRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "spaceId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Space ID"
+                    },
+                    {
+                        "in": "path",
+                        "name": "recordId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Record ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Record updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Record"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "example": {
+                                    "error": "title is required field"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemas": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "token"
+            }
+        },
+        "schemas": {
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "description": "Error message",
+                        "example": "domain is required field"
+                    }
+                }
+            },
+            "UserId": {
+                "type": "string",
+                "description": "User Id",
+                "example": "u1f1b9b3d-c07d-4c8e-901f-6445aa6aef8e"
+            },
+            "OrgId": {
+                "type": "string",
+                "description": "Organization ID",
+                "example": "o5725409b-7912-40c9-b7cd-8b2e607cf3f3"
+            },
+            "OrgName": {
+                "type": "string",
+                "description": "Organization name",
+                "example": "University of XYZ"
+            },
+            "SchemaId": {
+                "type": "string",
+                "description": "Schema Id",
+                "example": "s1f1b9b3d-c07d-4c8e-901f-6445aa6aef8e"
+            },
+            "SpaceName": {
+                "type": "string",
+                "description": "Space name",
+                "example": "Event XYZ Participation"
+            },
+            "SpaceActive": {
+                "type": "boolean",
+                "description": "Space active status",
+                "example": true
+            },
+            "SpaceId": {
+                "type": "string",
+                "description": "Space ID",
+                "example": "5725409b-7912-40c9-b7cd-8b2e607cf3f3"
+            },
+            "SpaceDescription": {
+                "type": "string",
+                "description": "Space Description",
+                "example": "This space contains records of participation certificate"
+            },
+            "SpaceTags": {
+                "type": "array",
+                "description": "Space Tags",
+                "example": "['Course 1', 'Quick Learner']"
+            },
+            "SchemaRequest": {
+                "type": "object",
+                "properties": {
+		    "schema": {
+			"type": "object",
+			"properties": {
+			    "description": {
+				"$ref": "#/components/schemas/SpaceDescription"
+			    },
+			    "title": {
+				"$ref": "#/components/schemas/SpaceName"
+			    },
+			    "properties": {
+				"type": "object"
+			    },
+			    "context": {
+				"type": "string",
+				"example": "http://json-schema.org/draft-07/schema#"
+			    }
+			}
+		    }
+                }
+            },
+            "Schema": {
+                "type": "object",
+                "properties": {
+                    "identity": {
+                        "$ref": "#/components/schemas/SpaceId"
+                    },
+                    "title": {
+                        "$ref": "#/components/schemas/SpaceName"
+                    },
+                    "description": {
+                        "$ref": "#/components/schemas/SpaceDescription"
+                    },
+                    "properties": {
+                        "type": "object"
+                    }
+                }
+            },
+            "SchemaListing": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "number",
+                        "description": "Count of spaces in this request",
+                        "example": "5"
+                    },
+                    "page": {
+                        "type": "number",
+                        "description": "page of this request (used in pagination) [0-n]",
+                        "example": "0"
+                    },
+                    "pageSize": {
+                        "type": "number",
+                        "description": "max size of spaces array (used in pagination) [1-n]",
+                        "example": "20"
+                    },
+                    "schemas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Schema"
+                        }
+                    }
+                }
+            },
+            "SpaceRequest": {
+                "type": "object",
+                "properties": {
+		    "space": {
+			"type": "object",
+			"properties": {
+			    "title": {
+				"$ref": "#/components/schemas/SpaceName"
+			    },
+			    "description": {
+				"$ref": "#/components/schemas/SpaceDescription"
+			    }
+			}
+		    }
+		}
+            },
+            "SpaceListing": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "number",
+                        "description": "Count of spaces in this request",
+                        "example": "5"
+                    },
+                    "page": {
+                        "type": "number",
+                        "description": "page of this request (used in pagination) [0-n]",
+                        "example": "0"
+                    },
+                    "pageSize": {
+                        "type": "number",
+                        "description": "max size of spaces array (used in pagination) [1-n]",
+                        "example": "20"
+                    },
+                    "spaces": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Space"
+                        }
+                    }
+                }
+            },
+            "Space": {
+                "type": "object",
+                "properties": {
+                    "identity": {
+                        "$ref": "#/components/schemas/SpaceId"
+                    },
+                    "title": {
+                        "$ref": "#/components/schemas/SpaceName"
+                    },
+                    "description": {
+                        "$ref": "#/components/schemas/SpaceDescription"
+                    },
+                    "active": {
+                        "$ref": "#/components/schemas/SpaceActive"
+                    },
+                    "schema": {
+                        "$ref": "#/components/schemas/SchemaId"
+                    }
+                }
+            },
+            "RecordId": {
+                "type": "string",
+                "description": "Record Id",
+                "example": "138a8cca-0404-11ed-ac97-cb7be2aeb26e"
+            },
+            "RecordPublicId": {
+                "type": "string",
+                "description": "Record Id",
+                "example": "138a8cca-0404-11ed-ac97-cb7be2aeb26e"
+            },
+            "RecordTitle": {
+                "type": "string",
+                "description": "Record Title",
+                "example": "Student Name"
+            },
+            "RecordRevoked": {
+                "type": "boolean",
+                "description": "Record Active Status",
+                "example": false
+            },
+            "RecordHash": {
+                "type": "string",
+                "description": "Hash of the Content",
+                "example": "a2e996e30ff823a507943864a9a7db3c168617acb845addb947eaf277f83ec4d"
+            },
+            "RecordSignature": {
+                "type": "string",
+                "description": "Signature of the Content",
+                "example": "0x006f43832156cbc303463e94eef7631f75638319fe91add8bc170ca33836b29998251077b92ec57d199e60c94b3757e4189ab9bc331ecb8ad22135bfe9b1653e0a"
+            },
+            "RecordTransactionHash": {
+                "type": "string",
+                "description": "Record Transaction Hash",
+                "example": "0xc33442028e179c347515890d9a53f7b827811b254cdaa441d468fe0bd256b334"
+            },
+            "RecordContent": {
+                "type": "object",
+                "description": "Record Content",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "URL to Redirect",
+                        "example": "value"
+                    }
+                }
+            },
+            "RecordRequest": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "$ref": "#/components/schemas/RecordTitle"
+                    },
+                    "publish": {
+                        "type": "boolean",
+                        "description": "Publish on Chain or not",
+                        "example": false,
+                        "required": false
+                    },
+                    "send_email": {
+                        "type": "boolean",
+                        "description": "Send Email about the credential issue",
+                        "example": false,
+                        "required": false
+                    },
+                    "issue_message": {
+                        "type": "string",
+                        "description": "Message from issuer to recipient",
+                        "example": "Congratulations on your degree completion",
+                        "required": false
+                    },
+                    "content": {
+                        "$ref": "#/components/schemas/RecordContent"
+                    }
+                }
+            },
+            "RecordListing": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "number",
+                        "description": "Count of records in this request",
+                        "example": "5"
+                    },
+                    "page": {
+                        "type": "number",
+                        "description": "page of this request (used in pagination) [0-n]",
+                        "example": "0"
+                    },
+                    "pageSize": {
+                        "type": "number",
+                        "description": "max size of records array (used in pagination) [1-n]",
+                        "example": "20"
+                    },
+                    "records": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Record"
+                        }
+                    }
+                }
+            },
+            "Record": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/RecordId"
+                    },
+                    "publicId": {
+                        "$ref": "#/components/schemas/RecordPublicId"
+                    },
+                    "title": {
+                        "$ref": "#/components/schemas/RecordTitle"
+                    },
+                    "schemaId": {
+                        "$ref": "#/components/schemas/SchemaId"
+                    },
+                    "revoked": {
+                        "$ref": "#/components/schemas/RecordRevoked"
+                    },
+                    "active": {
+                        "$ref": "#/components/schemas/RecordRevoked"
+                    },
+                    "hash": {
+                        "$ref": "#/components/schemas/RecordHash"
+                    },
+                    "signature": {
+                        "$ref": "#/components/schemas/RecordSignature"
+                    },
+                    "transactionHash": {
+                        "$ref": "#/components/schemas/RecordTransactionHash"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "Verification URL for the record",
+                        "example": "https://dway.io/m/e248dfa8-0409-11ed-ba3b-138cbf9c1d66?api=1",
+                        "required": false
+                    }
+                }
+            }
+        }
+    }
+}
