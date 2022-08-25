@@ -15,9 +15,12 @@ This will start a DB service, and also the dhiway/agent application, with requir
 
 If you want to run without docker, then the ENV variables needs to be passed properly, or update in src/dbconfig.ts. Run 'yarn && yarn build && yarn start'
 
+NOTE: If you can't use docker-compose, you can still run the project individually. Make sure to `set` the ENV variables present in .env file.
+
+One may need [`wsl`](https://docs.microsoft.com/en-us/windows/wsl/about) (Windows Subsystem for linux) installed on Windows.
 
 ## Docs
 
-Check documentation by checking http://localhost:5001/docs while project is running.
+Check API documentation by checking http://localhost:5001/docs while project is running.
 
 Or if you want a local html page then run `npx open-swagger-ui ./apis.json --open` from console.
