@@ -11,7 +11,7 @@
 
 "@cord.network/config@0.7.7-1":
   version "0.7.7-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/config/-/config-0.7.7-1.tgz#92acb3421946eaa14d1ae0e9db9650e035b3aacc"
+  resolved "https://registry.npmjs.org/@cord.network/config/-/config-0.7.7-1.tgz"
   integrity sha512-CkuM1G6dnSfNdZ/xBE/5mjdq5E3k4gAq77E6pI1+ba8t7ZW5M+iOFtwZraxKAHnJAzVrzYLdfy/7/ZV8o0BqpQ==
   dependencies:
     "@cord.network/utils" "0.7.7-1"
@@ -20,7 +20,7 @@
 
 "@cord.network/messaging@0.7.7-1":
   version "0.7.7-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/messaging/-/messaging-0.7.7-1.tgz#f639770e2ef666ab74f430831e49beef4b831e9d"
+  resolved "https://registry.npmjs.org/@cord.network/messaging/-/messaging-0.7.7-1.tgz"
   integrity sha512-5OLLEiA9VKK88BaJKdRqMv4PPNUzx6i6xJNrmqsEk4h21vnZrkLZu5ehX3sp8eJSCdcGkGHcpOWz034qFQHRrg==
   dependencies:
     "@cord.network/modules" "0.7.7-1"
@@ -31,7 +31,7 @@
 
 "@cord.network/modules@0.7.7-1":
   version "0.7.7-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/modules/-/modules-0.7.7-1.tgz#eb3912832c2d2c9fe40755e46f49806da879b789"
+  resolved "https://registry.npmjs.org/@cord.network/modules/-/modules-0.7.7-1.tgz"
   integrity sha512-XcFtw88JLLueUFoO3XvPVfW66ENgnDAdn/CEyVsauw7Pt0zoslf10xpj33mnNaPcgfNUFnsGAUq0WWjZ3Sm78w==
   dependencies:
     "@cord.network/config" "0.7.7-1"
@@ -47,7 +47,7 @@
 
 "@cord.network/network@0.7.7-1":
   version "0.7.7-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/network/-/network-0.7.7-1.tgz#627c303350fbdd19d24e84d039465b48f6b10b24"
+  resolved "https://registry.npmjs.org/@cord.network/network/-/network-0.7.7-1.tgz"
   integrity sha512-aODFOhDs3EJkpIMPpk/76LQ3JpiBp/qG/jBj+Y7Lnjsrrz7DJ34ApWOTMCkstv6LHiW4HFwbSHcTxbckuzhqmQ==
   dependencies:
     "@cord.network/config" "0.7.7-1"
@@ -59,7 +59,7 @@
 
 "@cord.network/sdk@^0.7.7-1":
   version "0.7.7-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/sdk/-/sdk-0.7.7-1.tgz#7f6ebc49198f1d3573fca82ae785634ffeb441d7"
+  resolved "https://registry.npmjs.org/@cord.network/sdk/-/sdk-0.7.7-1.tgz"
   integrity sha512-cX/+42cE0qV7N0YafwTy/uRWkpBn+rUcuctk9DJWgGCzG7vK41G0fw2lP9TUE/JhcMObLtByqCVALUI4NQu21g==
   dependencies:
     "@cord.network/messaging" "0.7.7-1"
@@ -71,7 +71,7 @@
 
 "@cord.network/types@0.7.7-1":
   version "0.7.7-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/types/-/types-0.7.7-1.tgz#08c4b5110af1f37c352d9abdab782ff2d10ff9e5"
+  resolved "https://registry.npmjs.org/@cord.network/types/-/types-0.7.7-1.tgz"
   integrity sha512-n3NxWh9ZdxLaTL7hqXBZw447Ig4kyKrpPx/wqKgdfTcIomeNKp5B+8wDR1YjiwzuOVB5xuo/ebeMhLC64AhGuw==
   dependencies:
     "@polkadot/api" "^8.12.0"
@@ -83,7 +83,7 @@
 
 "@cord.network/utils@0.7.7-1":
   version "0.7.7-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/utils/-/utils-0.7.7-1.tgz#cee306872b0af6f05742d3a7bd4ea332da1499a8"
+  resolved "https://registry.npmjs.org/@cord.network/utils/-/utils-0.7.7-1.tgz"
   integrity sha512-nRFR3CwLt/TBgT9Ss7PFjd7yhIIKabvmIC1B8sG7om5WLMyaj2I2/wu6RKWCW4mAoylc8StG0cMSwkZIOJ7Klw==
   dependencies:
     "@cord.network/types" "0.7.7-1"
@@ -97,7 +97,7 @@
 
 "@cord.network/vc-export@^0.7.7-1":
   version "0.7.7-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/vc-export/-/vc-export-0.7.7-1.tgz#845d9539180a01e1963fa4db736b1b9d61aa780b"
+  resolved "https://registry.npmjs.org/@cord.network/vc-export/-/vc-export-0.7.7-1.tgz"
   integrity sha512-lpxzTZZH0021+yFvlTrSZ4M6YQ2gZnY/AuSMmRo70SCUKQlENKwmFiMpYQwPRXJch3/JX/4cv4jkJB5ipRbXBA==
   dependencies:
     "@cord.network/modules" "0.7.7-1"
@@ -3334,9 +3334,9 @@ uid-safe@~2.1.5:
     random-bytes "~1.0.0"
 
 undici@^5.2.0:
-  version "5.8.1"
-  resolved "https://registry.npmjs.org/undici/-/undici-5.8.1.tgz"
-  integrity sha512-iDRmWX4Zar/4A/t+1LrKQRm102zw2l9Wgat3LtTlTn8ykvMZmAmpq9tjyHEigx18FsY7IfATvyN3xSw9BDz0eA==
+  version "5.10.0"
+  resolved "https://registry.npmjs.org/undici/-/undici-5.10.0.tgz"
+  integrity sha512-c8HsD3IbwmjjbLvoZuRI26TZic+TSEe8FPMLLOkN1AfYRhdjnKBU6yL+IwcSCbdZiX4e5t0lfMDLDCqj4Sq70g==
 
 universalify@^0.1.0:
   version "0.1.2"
