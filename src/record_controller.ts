@@ -44,7 +44,7 @@ export async function recordCreate(
 	let dbschema = await getConnection()
 		.getRepository(Schema)
 		.createQueryBuilder('schema')
-		.where('schema.identity = :id', { id: data.schema })
+		.where('schema.identity = :id', { id: data.schema?.replace('schema:cord:','') })
 		.getOne();
 
 	if (!dbschema) {
@@ -59,7 +59,8 @@ export async function recordCreate(
 
     let anchor = data.anchor === undefined ? true : !!data.anchor;
     try {
-	const response: any = await buildAndAnchorStream(req.params.spaceId, schema, data.content, null, anchor);
+    	let spaceId = req.params.spaceId.includes('space:cord:') ? req.params.spaceId : `space:cord:${req.params.spaceId}`
+	const response: any = await buildAndAnchorStream(spaceId, schema, data.content, null, anchor);
 	if (response.stream) {
 	    /* success */
 	    let record = new Record();
