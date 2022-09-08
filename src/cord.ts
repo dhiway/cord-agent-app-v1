@@ -233,12 +233,11 @@ export async function anchorStream(
                     contentstream,
                     qstream
 		);
-	  /*
-	    const VC = VCUtils.fromCredential(credential, schema);
-	  */
-	    
-	    return {
-                vc: undefined, //VC,
+
+            //const VC = VCUtils.fromCredential(credential, schema);
+
+            return {
+                //vc: VC,
                 credential: credential,
                 stream: stream,
                 contentstream: contentstream,

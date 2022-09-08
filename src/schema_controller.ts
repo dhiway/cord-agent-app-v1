@@ -33,7 +33,7 @@ export async function schemaCreate(
 	    /* success */
 	    const schema = new Schema();
 	    schema.title = data.schema.title;
-	    schema.identity = response.schema.identifier;
+	    schema.identity = response.schema?.identifier?.replace('schema:cord:','');
 	    schema.content = JSON.stringify(data.schema);
 	    schema.cordSchema = JSON.stringify(response.schema);
 	    schema.cordBlock = response.block;
@@ -57,7 +57,7 @@ export async function schemaShow(
 	const schema = await getConnection()
               .getRepository(Schema)
               .createQueryBuilder('schema')
-              .where('schema.identity = :id', { id: req.params.id })
+              .where('schema.identity = :id', { id: req.params.id?.replace('schema:cord:','') })
               .getOne();
 
 	res.json(schema);

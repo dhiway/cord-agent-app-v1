@@ -35,7 +35,7 @@ export async function spaceCreate(
 	    /* success */
 	    let space = new Space();
 	    space.title = data.space.title;
-	    space.identity = response.space.identifier;
+	    space.identity = response.space?.identifier?.replace('space:cord:','');
 	    space.content = JSON.stringify(data.space);
 	    space.cordSpace = JSON.stringify(response.space);
 	    space.cordBlock = response.block;
@@ -63,7 +63,7 @@ export async function spaceShow(
 	const space = await getConnection()
               .getRepository(Space)
               .createQueryBuilder('space')
-              .where('space.identity = :id', { id: req.params.id })
+              .where('space.identity = :id', { id: req.params.id?.replace('space:cord:','') })
               .getOne();
 
 	res.json(space);
