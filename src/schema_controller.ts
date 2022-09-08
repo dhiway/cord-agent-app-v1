@@ -1,7 +1,7 @@
 import express from 'express';
 import { getConnection } from 'typeorm';
 
-import { anchorSchema } from './cord';
+import { anchorSchema, revokeSchema } from './cord';
 import { Schema } from './entity/Schema';
 
 export async function schemaCreate(
@@ -38,7 +38,7 @@ export async function schemaCreate(
 	    schema.cordSchema = JSON.stringify(response.schema);
 	    schema.cordBlock = response.block;
 
-            getConnection().manager.save(schema);
+        getConnection().manager.save(schema);
 	    res.json({ result: "SUCCESS", schema: response.schema.identifier });
 	    return;
 	}
@@ -78,6 +78,47 @@ export async function schemaIndex(
               .getMany();
 
 	res.json(schemas);
+    } catch (err) {
+	res.status(500).json({error: err});
+    }
+    return;
+}
+
+export async function schemaRevoke(
+    req: express.Request,
+    res: express.Response
+) {
+    try {
+    const { id } = req.params;
+    if(!id) {
+        res.status(404).json({error: "'id' is a required parameter"});
+        return;
+    }
+
+	const schema = await getConnection()
+              .getRepository(Schema)
+              .createQueryBuilder('schema')
+              .where('schema.identity = :id', { id: id })
+              .getOne();
+
+    if (!schema) {
+        res.status(404).json({error: "no schema found for the id"});
+        return;
+    }
+
+    const response = await revokeSchema(schema);
+    if (response.block) {
+        await getConnection()
+            .getRepository(Schema)
+            .createQueryBuilder('schema')
+            .delete()
+            .where('schema.identity = :id', { id: id })
+            .execute()
+
+	    res.json({result: "SUCCESS", record: id, block: response.block});
+	} else {
+	    res.status(500).json({error: response.error});
+	}
     } catch (err) {
 	res.status(500).json({error: err});
     }

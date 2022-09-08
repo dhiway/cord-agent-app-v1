@@ -93,6 +93,38 @@ export async function anchorSchema(
     }
 }
 
+export async function revokeSchema(
+    schema: any
+) {
+    if (!cordInitDone) {
+        await cordInit();
+    }
+
+    let org_acc = signing_acc;
+    try {
+        let revokeSchemaCreationExtrinsic = await Cord.Schema.revoke(
+            schema,
+            org_acc
+        );
+        const tx = await Cord.Chain.signAndSubmitTx(
+            revokeSchemaCreationExtrinsic,
+            org_acc,
+            {
+                resolveOn: Cord.Chain.IS_IN_BLOCK,
+                rejectOn: Cord.Chain.IS_ERROR,
+            }
+        );
+        return {
+            tx: tx,
+            block: tx.status.asInBlock
+                ? Cord.Utils.Crypto.u8aToHex(tx.status.asInBlock)
+                : '',
+        };
+    } catch (err) {
+        return { error: err.message };
+    }
+}
+
 export async function anchorSpace(
     schemaId: string | null,
     space: any,
