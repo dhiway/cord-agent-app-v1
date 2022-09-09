@@ -26,6 +26,9 @@ export class Schema {
     identity?: string;
 
     @Column()
+    revoked?: boolean;
+
+    @Column()
     content?: string;
 
     @Column()

@@ -27,6 +27,7 @@ import {
     schemaIndex,
     schemaShow,
     schemaCreate,
+    schemaRevoke
 } from './schema_controller';
 
 const {
@@ -80,6 +81,10 @@ schemaRouter.get('/:id', async (req, res) => {
 
 schemaRouter.post('/', async (req, res) => {
     return await schemaCreate(req, res);
+});
+
+schemaRouter.post('/:id/revoke', async (req, res) => {
+    return await schemaRevoke(req, res);
 });
 
 spaceRouter.get('/', async (req, res) => {
