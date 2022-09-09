@@ -34,7 +34,7 @@ export async function schemaCreate(
 	    const schema = new Schema();
 	    schema.title = data.schema.title;
 	    schema.identity = response.schema?.identifier?.replace('schema:cord:','');
-        schema.revoked = true;
+        schema.revoked = false;
 	    schema.content = JSON.stringify(data.schema);
 	    schema.cordSchema = JSON.stringify(response.schema);
 	    schema.cordBlock = response.block;
