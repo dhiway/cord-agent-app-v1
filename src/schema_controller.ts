@@ -34,6 +34,7 @@ export async function schemaCreate(
 	    const schema = new Schema();
 	    schema.title = data.schema.title;
 	    schema.identity = response.schema?.identifier?.replace('schema:cord:','');
+        schema.revoked = true;
 	    schema.content = JSON.stringify(data.schema);
 	    schema.cordSchema = JSON.stringify(response.schema);
 	    schema.cordBlock = response.block;
@@ -108,12 +109,8 @@ export async function schemaRevoke(
 
     const response = await revokeSchema(schema);
     if (response.block) {
-        await getConnection()
-            .getRepository(Schema)
-            .createQueryBuilder('schema')
-            .delete()
-            .where('schema.identity = :id', { id: id })
-            .execute()
+        schema.revoked = true;
+	    getConnection().manager.save(schema);
 
 	    res.json({result: "SUCCESS", record: id, block: response.block});
 	} else {
