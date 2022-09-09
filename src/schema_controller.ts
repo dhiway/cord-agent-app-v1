@@ -95,11 +95,10 @@ export async function schemaRevoke(
         res.status(404).json({error: "'id' is a required parameter"});
         return;
     }
-
 	const schema = await getConnection()
               .getRepository(Schema)
               .createQueryBuilder('schema')
-              .where('schema.identity = :id', { id: id })
+              .where('schema.identity = :id', { id: req.params.id?.replace('schema:cord:','') })
               .getOne();
 
     if (!schema) {
@@ -107,7 +106,10 @@ export async function schemaRevoke(
         return;
     }
 
-    const response = await revokeSchema(schema);
+    let { cordSchema } = schema;
+    cordSchema = JSON.parse(cordSchema); 
+
+    const response = await revokeSchema(cordSchema);
     if (response.block) {
         schema.revoked = true;
 	    getConnection().manager.save(schema);
