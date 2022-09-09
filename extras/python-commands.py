@@ -1,38 +1,32 @@
 import requests
-import json
 
 #schema
 def create_new_schema():
     url = "http://localhost:5001/api/v1/schemas"
-    payload = json.dumps({
+    payload = {
         "schema": {
             "$schema": "http://json-schema.org/draft-07/schema#",
             "title": "test-shivansh-new-3",
             "description": "Test Description",
             "type": "object",
             "properties": {
-            "name": {
-                "type": "string"
-            },
-            "email": {
-                "type": "string"
-            },
-            "gender": {
-                "type": "string"
-            }
+                    "name": { "type": "string"},
+                    "email": { "type": "string" },
+                    "gender": { "type": "string"}
+                }
             }
         }
-    })
-    response = requests.request("POST", url, data=payload)
-    print(response.json())
     
+    response = requests.request("POST", url, json=payload)
+    print(response.json())
+
     '''
     {
         "result": "SUCCESS",
         "schema": "schema:cord:57eeFhxzZVfwUmfWSz5TSgZB5AZnhCx5eECQ9XgWENpGEVR4"
     }
     '''
-    
+
 def fetch_schema_by_identity():
     url = "http://localhost:5001/api/v1/schemas/schema:cord:57eeFhxzZVfwUmfWSz5TSgZB5AZnhCx5eECQ9XgWENpGEVR4"
     response = requests.request("GET", url)
@@ -84,14 +78,14 @@ def revoke_schema():
 #space
 def create_space():
     url = "http://localhost:5001/api/v1/spaces"
-    payload = json.dumps({
+    payload = {
         "schema": "schema:cord:595HpjtdExcKsce5dzaKTRwNBRoKbp6Xzs9udzbhC4WVXs2X",
         "space": {
             "title": "test-shivansh-3",
             "description": "Some Description"
         }
-    })
-    response = requests.request("POST", url, data=payload)
+    }
+    response = requests.request("POST", url, json=payload)
     print(response.json())
     '''
     {
@@ -99,7 +93,7 @@ def create_space():
         "space": "space:cord:47phMdxzBSL3FofzD6jwJp7FfAnhMow4oHNCjYY31fieE8fv"
     }
     '''
-    
+
 def fetch_all_space():
     url = "http://localhost:5001/api/v1/spaces"
     response = requests.request("GET", url)
@@ -118,7 +112,7 @@ def fetch_all_space():
         }
     ]
     '''
-    
+
 def fetch_space_by_identity():
     url = "http://localhost:5001/api/v1/spaces/47phMdxzBSL3FofzD6jwJp7FfAnhMow4oHNCjYY31fieE8fv"
     response = requests.request("GET", url)
