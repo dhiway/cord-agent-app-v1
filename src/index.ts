@@ -6,30 +6,12 @@ import { v4 as uuidv4 } from 'uuid';
 import swaggerUi from 'swagger-ui-express';
 
 import { app, server } from './server';
-import { cordInit } from './cord';
-import {
-    recordIndex,
-    recordShow,
-    recordCreate,
-    recordUpdate,
-    recordCommit,
-    recordRevoke,
-    recordDelete,
-} from './record_controller';
-import {
-    spaceCreate,
-    spaceUpdate,
-    spaceShow,
-    spaceIndex,
-} from './space_controller';
-import { dbConfig } from './dbconfig';
-import {
-    schemaIndex,
-    schemaShow,
-    schemaCreate,
-    schemaRevoke
-} from './schema_controller';
+import { Init as CordInit, AccountConfiguration } from './cord/init';
+import { Record as RecordController } from "./controller/record";
+import { Schema as SchemaController } from "./controller/schema";
+import { Space as SpaceController } from "./controller/space";
 
+import { dbConfig } from './config/dbconfig';
 const {
     PORT,
     STASH_URI,
@@ -72,59 +54,59 @@ const storage = multer.diskStorage({
 const upload_bg = multer({ storage: storage });
 
 schemaRouter.get('/', async (req, res) => {
-    return await schemaIndex(req, res);
+    return await SchemaController.index(req, res);
 });
 
 schemaRouter.get('/:id', async (req, res) => {
-    return await schemaShow(req, res);
+    return await SchemaController.show(req, res);
 });
 
 schemaRouter.post('/', async (req, res) => {
-    return await schemaCreate(req, res);
+    return await SchemaController.create(req, res);
 });
 
 schemaRouter.post('/:id/revoke', async (req, res) => {
-    return await schemaRevoke(req, res);
+    return await SchemaController.revoke(req, res);
 });
 
 spaceRouter.get('/', async (req, res) => {
-    return await spaceIndex(req, res);
+    return await SpaceController.index(req, res);
 });
 
 spaceRouter.get('/:id', async (req, res) => {
-    return await spaceShow(req, res);
+    return await SpaceController.show(req, res);
 });
 
 spaceRouter.post('/', async (req, res) => {
-    return await spaceCreate(req, res);
+    return await SpaceController.create(req, res);
 });
 
 recordRouter.get('/', async (req, res) => {
-    return await recordIndex(req, res);
+    return await RecordController.index(req, res);
 });
 
 recordRouter.get('/:id', async (req, res) => {
-    return await recordShow(req, res);
+    return await RecordController.show(req, res);
 });
 
 recordRouter.delete('/:id', async (req, res) => {
-    return await recordDelete(req, res);
+    return await RecordController.delete(req, res);
 });
 
 recordRouter.post('/', upload.any(), async (req, res) => {
-    return await recordCreate(req, res);
+    return await RecordController.create(req, res);
 });
 
 recordRouter.post('/:id/issue', async (req, res) => {
-    return await recordCommit(req, res);
+    return await RecordController.commit(req, res);
 });
 
 recordRouter.put('/:id', upload.any(), async (req, res) => {
-    return await recordUpdate(req, res);
+    return await RecordController.update(req, res);
 });
 
 recordRouter.post('/:id/revoke', async (req, res) => {
-    return await recordRevoke(req, res);
+    return await RecordController.revoke(req, res);
 });
 
 app.use('/api/v1/schemas', schemaRouter);
@@ -167,7 +149,11 @@ async function main() {
     server.listen(parseInt(PORT, 10), () => {
         console.log(`Dhiway gateway is running at http://localhost:${PORT}`);
     });
-    await cordInit();
+
+    const accountConfiguration: AccountConfiguration = await CordInit.getConfiguration();
+    console.log("CORD Initialized");
+    console.log('Stash Account - ', accountConfiguration.stashAccount.address);
+    console.log('Signing Account - ', accountConfiguration.signingAccount.address);
 }
 
 main().catch((e) => console.log(e));
