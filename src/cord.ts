@@ -252,6 +252,67 @@ export async function anchorStream(
     }
 }
 
+export async function updateStream(
+    streamId: string,
+    contentstream: any,
+    content: any
+) {
+    if (!cordInitDone) {
+        await cordInit();
+    }
+    const org_acc = signing_acc;
+
+    let updateContent = {
+	...contentstream,
+	content: {
+	    ...contentstream.content,
+	    contents: content
+	}
+    }
+
+    let updateStreamContent = Cord.ContentStream.updateContent(
+	updateContent,
+	org_acc
+    )
+  let updateStream = Cord.Stream.fromContentStream(updateStreamContent)
+  let streamUpdateExtrinsic = await Cord.Stream.update(updateStream)
+
+    try {
+	const tx = await Cord.Chain.signAndSubmitTx(
+	    streamUpdateExtrinsic,
+	    org_acc,
+	    {
+                resolveOn: Cord.Chain.IS_IN_BLOCK,
+                rejectOn: Cord.Chain.IS_ERROR,
+	    }
+        );
+        if (tx && !tx.dispatchError) {
+	    let block = tx.status.asInBlock ? Cord.Utils.Crypto.u8aToHex(tx.status.asInBlock) : '';
+	    const qstream = await Cord.Stream.query(updateStream.identifier);
+	    const credential = Cord.Credential.fromRequestAndStream(
+                    updateContent,
+                    qstream
+		);
+
+            //const VC = VCUtils.fromCredential(credential, schema);
+
+            return {
+                //vc: VC,
+		vc: undefined,
+                credential: credential,
+                stream: updateStream,
+                contentstream: updateContent,
+                tx: tx,
+		block: block,
+	    };
+        }
+        return { error: tx.dispatchError.toString() };
+    } catch (e: any) {
+        console.log(e.errorCode, '-', e.message);
+        return { error: e.message };
+    }
+}
+
 export async function revokeStream(
     stream: any
 ) {
