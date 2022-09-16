@@ -1,7 +1,7 @@
 import express from 'express';
 import { getConnection } from 'typeorm';
 
-import { buildAndAnchorStream, anchorStream, revokeStream } from './cord';
+import { buildAndAnchorStream, anchorStream, revokeStream, updateStream } from './cord';
 import { Schema } from './entity/Schema';
 import { Record } from './entity/Record';
 
@@ -139,7 +139,49 @@ export async function recordUpdate(
     req: express.Request,
     res: express.Response
 ) {
-    res.json({error: "Function not implemented"});
+    try {
+	let record = await getConnection()
+              .getRepository(Record)
+              .createQueryBuilder('record')
+              .where('record.identity = :id', { id: req.params.id })
+              .andWhere('record.latest = :latest', { latest: true })
+              .getOne();
+
+	if (!record) {
+	    return res.status(404).json({error: "Identifier not found"});
+	}
+
+	const data = req.body;
+	const content = JSON.parse(record.cordStreamContent);
+	
+	const response = await updateStream(record.identity, content, data.content);
+	if (response.block) {
+	    /* Success */
+	    let newrecord = new Record();
+
+	    record.latest = false;
+            record.active = false;
+	    newrecord.latest = true;
+	    newrecord.revoked = false;
+	    newrecord.title = data.title;
+	    newrecord.identity = response.stream.identifier;
+	    newrecord.content = JSON.stringify(data.content);
+	    newrecord.cordStreamContent = JSON.stringify(response.contentstream);
+	    newrecord.cordStream = JSON.stringify(response.stream);
+            newrecord.active = true;
+	    newrecord.cordBlock = response.block ?? '';
+	    newrecord.credential = response.credential ? JSON.stringify(response.credential) : '';
+	    newrecord.vc = response.vc ? JSON.stringify(response.vc) : '';
+	    await getConnection().manager.save(newrecord);
+	    await getConnection().manager.save(record);
+	    res.json({ result: "SUCCESS", stream: response.stream, vc: undefined });
+	} else {
+	    /* Failed to write to chain / error in sdk */
+	}
+    } catch (err) {
+	return res.status(500).json({error: err});
+    }
+    return res.status(500).json({error: "ERROR"});
 }
 
 export async function recordCommit(
