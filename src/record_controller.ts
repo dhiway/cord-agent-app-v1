@@ -174,9 +174,10 @@ export async function recordUpdate(
 	    newrecord.vc = response.vc ? JSON.stringify(response.vc) : '';
 	    await getConnection().manager.save(newrecord);
 	    await getConnection().manager.save(record);
-	    res.json({ result: "SUCCESS", stream: response.stream, vc: undefined });
+	    return res.json({ result: "SUCCESS", stream: response.stream, vc: undefined });
 	} else {
 	    /* Failed to write to chain / error in sdk */
+	    return res.status(500).json({error: "failed to update on the chain"});
 	}
     } catch (err) {
 	return res.status(500).json({error: err});
