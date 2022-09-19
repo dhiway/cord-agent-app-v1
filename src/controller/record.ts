@@ -270,12 +270,11 @@ export class Record {
         await getConnection().manager.save(record);
         res.json({ result: "SUCCESS", stream: response.stream, vc: undefined });
       } else {
-        /* Failed to write to chain / error in sdk */
+        return res.status(500).json({error: "failed to update on the chain"});
       }
     } catch (err) {
       return res.status(500).json({ error: err });
     }
-    return res.status(500).json({ error: "ERROR" });
   }
 
   public static async delete(req: express.Request, res: express.Response) {
