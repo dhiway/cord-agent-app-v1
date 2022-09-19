@@ -25,7 +25,7 @@ export class Schema {
     @Column()
     identity?: string;
 
-    @Column()
+    @Column({nullable: true, default: null})
     revoked?: boolean;
 
     @Column()
