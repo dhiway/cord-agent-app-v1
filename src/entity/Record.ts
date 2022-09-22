@@ -35,25 +35,25 @@ export class Record {
     @Column()
     title?: string;
 
-    @Column()
+    @Column({length: 64})
     identity?: string;
 
-    @Column()
+    @Column({type: 'text'})
     content?: string;
 
-    @Column()
+    @Column({type: 'text'})
     cordStreamContent?: string;
 
-    @Column()
+    @Column({type: 'text'})
     cordStream?: string;
 
     @Column({nullable: true})
     cordBlock?: string;
 
-    @Column({nullable: true})
+    @Column({nullable: true, type: 'text'})
     credential?: string;
 
-    @Column({nullable: true})
+    @Column({nullable: true, type: 'text'})
     vc?: string;
 
     @CreateDateColumn({ name: 'created_at' })

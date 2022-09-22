@@ -22,16 +22,16 @@ export class Schema {
     @Column()
     title?: string;
 
-    @Column()
+    @Column({length: 64})
     identity?: string;
 
     @Column({nullable: true, default: null})
     revoked?: boolean;
 
-    @Column()
+    @Column({type: 'text'})
     content?: string;
 
-    @Column()
+    @Column({type: 'text'})
     cordSchema?: string;
 
     @Column()
