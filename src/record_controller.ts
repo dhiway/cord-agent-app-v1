@@ -109,7 +109,19 @@ export async function recordShow(
               .andWhere('record.latest = :latest', { latest: true })
               .getOne();
 
-	res.json(record);
+        /* Also send history of all records with identifier */
+        let history: any = undefined;
+        if (record) {
+             history = await getConnection()
+                .getRepository(Record)
+                .createQueryBuilder('record')
+                .select(['record.id', 'record.cordBlock', 'record.credential','record.createdAt', 'record.updatedAt'])
+                .where('record.identity = :id', { id: req.params.id })
+                .orderBy('record.createdAt', 'ASC')
+                .getMany();
+        }
+
+        res.json({...record, history: history});
     } catch (err) {
 	res.status(500).json({error: err});
     }
