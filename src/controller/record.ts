@@ -118,7 +118,25 @@ export class Record {
         .andWhere("record.latest = :latest", { latest: true })
         .getOne();
 
-      res.json(record);
+      /* Also send history of all records with identifier */
+      let history: any;
+      if (record) {
+        history = await getConnection()
+          .getRepository(RecordEntity)
+          .createQueryBuilder("record")
+          .select([
+            "record.id",
+            "record.cordBlock",
+            "record.credential",
+            "record.createdAt",
+            "record.updatedAt",
+          ])
+          .where("record.identity = :id", { id: req.params.id })
+          .orderBy("record.createdAt", "ASC")
+          .getMany();
+      }
+
+      res.json({ ...record, history: history });
     } catch (err) {
       res.status(500).json({ error: err });
     }
@@ -126,14 +144,14 @@ export class Record {
 
   public static async index(req: express.Request, res: express.Response) {
     try {
-      const schemas = await getConnection()
-        .getRepository(SchemaEntity)
-        .createQueryBuilder("schema")
+      const records = await getConnection()
+        .getRepository(RecordEntity)
+        .createQueryBuilder("record")
         .where("record.latest = :latest", { latest: true })
         .where("record.revoked = :revoked", { revoked: false })
         .getMany();
 
-      res.json(schemas);
+      res.json(records);
     } catch (err) {
       res.status(500).json({ error: err });
     }
@@ -270,7 +288,7 @@ export class Record {
         await getConnection().manager.save(record);
         res.json({ result: "SUCCESS", stream: response.stream, vc: undefined });
       } else {
-        return res.status(500).json({error: "failed to update on the chain"});
+        return res.status(500).json({ error: "failed to update on the chain" });
       }
     } catch (err) {
       return res.status(500).json({ error: err });
