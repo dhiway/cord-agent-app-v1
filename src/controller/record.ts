@@ -296,6 +296,31 @@ export class Record {
   }
 
   public static async delete(req: express.Request, res: express.Response) {
-    res.json({ error: "Function not implemented" });
+    try {
+      let record = await getConnection()
+        .getRepository(RecordEntity)
+        .createQueryBuilder("record")
+        .where("record.identity = :id", { id: req.params.id })
+        .andWhere("record.latest = :latest", { latest: true })
+        .getOne();
+
+      if (!record) {
+        return res.status(404).json({ error: "Identifier not found" });
+      }
+
+      if (record.active) {
+        return res.status(404).json({ error: "Record is anchored" });
+      }
+      
+      await getConnection()
+        .createQueryBuilder()
+        .delete()
+        .from(RecordEntity)
+        .where("record.identity = :id", { id: req.params.id })
+        .execute();
+      return res.status(200).json({ result: "SUCCESS" });
+    } catch (err) {
+      return res.status(500).json({ error: err });
+    }
   }
 }
