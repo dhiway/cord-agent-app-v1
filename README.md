@@ -34,17 +34,19 @@ Before deployment, make sure you get 2 keys generated for your use. Of which, ne
 One can use browser extensions available through https://apps.cord.network ('Accounts' -> 'Add Account'), or use subkey project to create the key.
 
 ```
-docker run --rm parity/subkey:2.0.0 generate --network cord
+docker run --rm parity/subkey generate --network cord
 ```
 
 The output would be something like below, of which, keep the secret, and share SS58 Address
 
 ```
-Secret phrase `border appear grid thunder shed moral copy broom child divert first company` is account:
-  Secret seed:      0x43ab625877717b4ca175d27c1495667e5d2cdec9e57ff1b56f1a5135443a3b42
-  Public key (hex): 0xc8a549bbffe4538dcc1261daa5553777f5ab995b57e23b62f38a8910b16e7a78
-  Account ID:       0xc8a549bbffe4538dcc1261daa5553777f5ab995b57e23b62f38a8910b16e7a78
-  SS58 Address:     3yNDB5cyMHZW7MWhz3g6pyGCmQLCQqTz43kNpWpgMU95u44w
+Secret phrase:       globe bargain edge valve position bulk pistol bench auto change arrive clog
+  Network ID:        cord
+  Secret seed:       0x163ea24b0bd09a592c589f667bcfbe678a4e967f8683b31494e4169eff441462
+  Public key (hex):  0x647365f6561fcf816c9670bb0eb106131015c9aa43881acfe90eee8898b3d709
+  Account ID:        0x647365f6561fcf816c9670bb0eb106131015c9aa43881acfe90eee8898b3d709
+  Public key (SS58): 3w6qZmZQG3yFhLuFhXaTSd2J9NYP48uawdVT18pQ6qHaXaTL
+  SS58 Address:      3w6qZmZQG3yFhLuFhXaTSd2J9NYP48uawdVT18pQ6qHaXaTL
 ```
 
 Below diagram would give an idea of how to deploy the project, and its intended use.
