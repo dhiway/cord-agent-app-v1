@@ -7,6 +7,7 @@ import { dbConfig } from "./config/dbconfig";
 import SchemaRouter from "./router/schema";
 import SpaceRouter from "./router/space";
 import RecordRouter from "./router/record";
+import ScoreRouter from "./router/score";
 
 const { PORT, STASH_URI, SIGNING_URI } = process.env;
 
@@ -17,6 +18,7 @@ const openApiDocumentation = JSON.parse(
 app.use("/api/v1/schemas", SchemaRouter);
 app.use("/api/v1/spaces", SpaceRouter);
 app.use("/api/v1/:spaceId/records", RecordRouter);
+app.use("/api/v1/scores", ScoreRouter);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 

@@ -1,6 +1,6 @@
 {
     "name": "agent",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "",
     "main": "src/index.ts",
     "scripts": {
@@ -12,8 +12,8 @@
     "author": "Dhiway",
     "license": "Apache v2.0",
     "dependencies": {
-        "@cord.network/sdk": "^0.7.7-3",
-        "@cord.network/vc-export": "^0.7.7-3",
+        "@cord.network/sdk": "^0.7.8-1",
+        "@cord.network/vc-export": "^0.7.8-1",
         "dayjs": "^1.10.4",
         "express": "^4.17.1",
         "express-session": "^1.17.1",
