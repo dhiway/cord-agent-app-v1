@@ -19,6 +19,14 @@ NOTE: If you can't use docker-compose, you can still run the project individuall
 
 One may need [`wsl`](https://docs.microsoft.com/en-us/windows/wsl/about) (Windows Subsystem for linux) installed on Windows.
 
+NOTE: If you are running MacOS then try below
+
+```
+$ docker build -t dhiway/agent:latest -f Dockerfile.mac
+$ docker compose up
+```
+
+
 ## Docs
 
 Check API documentation by checking http://localhost:5001/docs while project is running.
