@@ -12,8 +12,8 @@
     "author": "Dhiway",
     "license": "Apache v2.0",
     "dependencies": {
-        "@cord.network/sdk": "^0.7.7-3",
-        "@cord.network/vc-export": "^0.7.7-3",
+        "@cord.network/sdk": "^0.7.8-6",
+        "@cord.network/vc-export": "^0.7.8-6",
         "dayjs": "^1.10.4",
         "express": "^4.17.1",
         "express-session": "^1.17.1",

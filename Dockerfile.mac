@@ -1,0 +1,16 @@
+FROM node:18-slim
+
+WORKDIR /app
+
+RUN apt update && apt install -y python3 make gcc g++
+COPY package.json package-lock.json  /app/
+RUN npm ci
+
+COPY . .
+RUN yarn build
+
+EXPOSE 5001
+
+CMD ["npm", "run", "start"]
+
+#CMD ["tail", "-f", "/dev/null"]
