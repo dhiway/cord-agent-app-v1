@@ -1,4 +1,5 @@
 import fs from "fs";
+
 import { createConnection } from "typeorm";
 import swaggerUi from "swagger-ui-express";
 import { app, server } from "./server";
@@ -46,6 +47,7 @@ async function main() {
     );
     return;
   }
+
   createConnection(dbConfig);
   server.listen(parseInt(PORT, 10), () => {
     console.log(`Dhiway gateway is running at http://localhost:${PORT}`);
@@ -53,12 +55,7 @@ async function main() {
 
   const accountConfiguration: AccountConfiguration =
     await CordInit.getConfiguration();
-  console.log("CORD Initialized");
-  console.log("Stash Account - ", accountConfiguration.stashAccount.address);
-  console.log(
-    "Signing Account - ",
-    accountConfiguration.signingAccount.address
-  );
+
 }
 
 main().catch((e) => console.log(e));

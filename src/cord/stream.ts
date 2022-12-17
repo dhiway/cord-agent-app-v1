@@ -1,4 +1,5 @@
 import * as Cord from "@cord.network/sdk";
+import * as VCUtils from "@cord.network/vc-export";
 import { Init, AccountConfiguration } from "./init";
 
 export class Stream {
@@ -75,7 +76,9 @@ export class Stream {
           qstream
         );
 
+       const vc = VCUtils.fromCredential(credential, schema);
         return {
+	  vc: vc,
           credential: credential,
           stream: stream,
           contentstream: contentstream,
