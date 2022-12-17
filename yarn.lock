@@ -9,35 +9,35 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
-"@cord.network/config@0.7.8-1":
-  version "0.7.8-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/config/-/config-0.7.8-1.tgz#c0dc60178761f7f14776c1f7f7e5a006547f9a93"
-  integrity sha512-/ENe/SNSpUKE/Wm5ffFRY1kUWztbu0lABJENHi7+DjrmLd66fUhSMfHS9h67vaIPR5NqzcIvztibPrmixz+cfA==
+"@cord.network/config@0.7.8-6":
+  version "0.7.8-6"
+  resolved "https://registry.yarnpkg.com/@cord.network/config/-/config-0.7.8-6.tgz#ce8a95e361cc65098453bdc9de3196ad744c95bd"
+  integrity sha512-2sTgGE1pKpPzcLrG6Yx0ZvQdIVDrPZNlQJblxH3PD86DmFExfNOBW2AzotQJHGjhOTw2N0/HOD+VvSZymSLOfQ==
   dependencies:
-    "@cord.network/utils" "0.7.8-1"
+    "@cord.network/utils" "0.7.8-6"
     "@polkadot/api-augment" "^9.4.1"
     typescript-logging "^0.6.4"
 
-"@cord.network/messaging@0.7.8-1":
-  version "0.7.8-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/messaging/-/messaging-0.7.8-1.tgz#5e7e9fee5c79fb71ddd29d34e14752f741224f26"
-  integrity sha512-G0rjMW6Q7AWz58wDRuTUIiIkaJK1zX4GOtB0Zhil2fysJKOg8Yg1kSXgvD32fEaMmfJDR9Cd7VBzrbcI9BDBBw==
+"@cord.network/messaging@0.7.8-6":
+  version "0.7.8-6"
+  resolved "https://registry.yarnpkg.com/@cord.network/messaging/-/messaging-0.7.8-6.tgz#aad05916509bf33deb31023cde3cf19d3372a612"
+  integrity sha512-NdYEcMGGRoB72PfkIGx5CAS+KPxA54MGDnNSLxxdtjP3AUEhVKN1NmGFiyIf9vBe/K+oUGNPsJYUHEw1c5kgkA==
   dependencies:
-    "@cord.network/modules" "0.7.8-1"
-    "@cord.network/types" "0.7.8-1"
-    "@cord.network/utils" "0.7.8-1"
+    "@cord.network/modules" "0.7.8-6"
+    "@cord.network/types" "0.7.8-6"
+    "@cord.network/utils" "0.7.8-6"
     "@polkadot/api-augment" "^9.4.1"
     "@polkadot/util" "^10.0.0"
 
-"@cord.network/modules@0.7.8-1":
-  version "0.7.8-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/modules/-/modules-0.7.8-1.tgz#bcd9ea93989fcfe0776da465bcce70f6c82cef1c"
-  integrity sha512-GeMXri5Jzs4HWd2NnX6yqWA9qWAur0J84F/Oz8TToEAXachU3ae0tc4Tre4e/YQz0xuWZhW+AC/Y6TD5+jv3JA==
+"@cord.network/modules@0.7.8-6":
+  version "0.7.8-6"
+  resolved "https://registry.yarnpkg.com/@cord.network/modules/-/modules-0.7.8-6.tgz#6ddab0b5fed827afb09a8169479a8205b47e97a1"
+  integrity sha512-5ABFi9dnmMdhHdl/Bspj5+doyTNUI7nICRmK5zM4qzpibOa/Wd/DXJ+zBs3xtTt9bAYgmdEPGXQGLikTeRPIKA==
   dependencies:
-    "@cord.network/config" "0.7.8-1"
-    "@cord.network/network" "0.7.8-1"
-    "@cord.network/types" "0.7.8-1"
-    "@cord.network/utils" "0.7.8-1"
+    "@cord.network/config" "0.7.8-6"
+    "@cord.network/network" "0.7.8-6"
+    "@cord.network/types" "0.7.8-6"
+    "@cord.network/utils" "0.7.8-6"
     "@polkadot/api" "^9.4.1"
     "@polkadot/api-augment" "^9.4.1"
     "@polkadot/keyring" "^10.0.0"
@@ -45,34 +45,34 @@
     "@polkadot/util" "^10.0.0"
     tweetnacl "^1.0.3"
 
-"@cord.network/network@0.7.8-1":
-  version "0.7.8-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/network/-/network-0.7.8-1.tgz#f76321c88cdc7ba5e94d3b5efde9b96262d02bd9"
-  integrity sha512-XpeSyL4seDcb2FrDXRNKJPbQ7iPyeHIk6DZ9AorLDenZmYm+L8CNVq2o9iCzHXyr/9Jh20aOhBm5jgJVkZnsNg==
+"@cord.network/network@0.7.8-6":
+  version "0.7.8-6"
+  resolved "https://registry.yarnpkg.com/@cord.network/network/-/network-0.7.8-6.tgz#34583aa8509652145295bac9d5cd381170136560"
+  integrity sha512-QoRMUoersae4Wlsqzo9cyrO1qWn15GlIgRSHS07qr+5t6txy5M05KaeK+d7HiPIyAo1oYBsBioejsNQUk2TRbw==
   dependencies:
-    "@cord.network/config" "0.7.8-1"
-    "@cord.network/types" "0.7.8-1"
-    "@cord.network/utils" "0.7.8-1"
+    "@cord.network/config" "0.7.8-6"
+    "@cord.network/types" "0.7.8-6"
+    "@cord.network/utils" "0.7.8-6"
     "@polkadot/api" "^9.4.1"
     "@polkadot/api-augment" "^9.4.1"
     "@polkadot/types" "^9.4.1"
 
-"@cord.network/sdk@^0.7.8-1":
-  version "0.7.8-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/sdk/-/sdk-0.7.8-1.tgz#50aecec06fdbab5b612cbdc708c54b17d9d00367"
-  integrity sha512-6QpE3yPD93Td08GwcqQLKUhYhaYYhS5eHBc6vt3d1mt0hJyrDRBe0vV/Ak3VzUbA4RCy2YeTL5JIhkAJfNE3YQ==
+"@cord.network/sdk@^0.7.8-6":
+  version "0.7.8-6"
+  resolved "https://registry.yarnpkg.com/@cord.network/sdk/-/sdk-0.7.8-6.tgz#0f96b3300614a87ed5d9ad3417d0114f67512767"
+  integrity sha512-0ScPpDnerGqYkDdqyGXcioZr+IC2AeS3ripczWi9MGf+189PhbtBYUVk7DhMyvRP9c8IWK7x8rZrWuSWLrFp+g==
   dependencies:
-    "@cord.network/messaging" "0.7.8-1"
-    "@cord.network/modules" "0.7.8-1"
-    "@cord.network/network" "0.7.8-1"
-    "@cord.network/types" "0.7.8-1"
-    "@cord.network/utils" "0.7.8-1"
+    "@cord.network/messaging" "0.7.8-6"
+    "@cord.network/modules" "0.7.8-6"
+    "@cord.network/network" "0.7.8-6"
+    "@cord.network/types" "0.7.8-6"
+    "@cord.network/utils" "0.7.8-6"
     "@polkadot/api-augment" "^9.4.1"
 
-"@cord.network/types@0.7.8-1":
-  version "0.7.8-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/types/-/types-0.7.8-1.tgz#ffc534d5bfdd2d013c4ed1a6d71039ce5fcc4f72"
-  integrity sha512-2ZgpKdm1np/mr9hJGgVSb5BNh6jRL02HVy71OwvfQqz3r9LcDoOc56NmOB6WdPc5zWZvI0LoHi6wcJBlL7cdqg==
+"@cord.network/types@0.7.8-6":
+  version "0.7.8-6"
+  resolved "https://registry.yarnpkg.com/@cord.network/types/-/types-0.7.8-6.tgz#ffd76a6128f9148eec8c1030a01c29d79c9f4999"
+  integrity sha512-v4cX3lZZOVm44/lCsPOBA/3undrBtxgfCiqU7HAkX0kEKmfUhGy+oIlEnjNLOv3+AjGLXpt7TTsFeDMR1cFUsw==
   dependencies:
     "@polkadot/api" "^9.4.1"
     "@polkadot/api-augment" "^9.4.1"
@@ -81,12 +81,12 @@
     "@polkadot/util" "^10.0.0"
     tweetnacl "^1.0.3"
 
-"@cord.network/utils@0.7.8-1":
-  version "0.7.8-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/utils/-/utils-0.7.8-1.tgz#19c51556c46b88a992e547772dcaf8b07ed9b570"
-  integrity sha512-EZ0N6dbWOqDquy60LUoIDUaF/NFJNTielUvdbChlPOLmi+Ex4WTVP0a+ndeZ5ad4LJzoR+qEPqj9oCEiaiHSQw==
+"@cord.network/utils@0.7.8-6":
+  version "0.7.8-6"
+  resolved "https://registry.yarnpkg.com/@cord.network/utils/-/utils-0.7.8-6.tgz#c055a1906b0686eccf4914956bc3d01fb568ce03"
+  integrity sha512-hplAzo1gtz9fr13LF1usokut4sMUwrZii2yg6r7+bSPExodT4zVIyrRz8kc0pAt8acb+4WW3ztqO6iCH9AR0tQ==
   dependencies:
-    "@cord.network/types" "0.7.8-1"
+    "@cord.network/types" "0.7.8-6"
     "@polkadot/api-augment" "^9.4.1"
     "@polkadot/keyring" "^10.0.0"
     "@polkadot/types" "^9.4.1"
@@ -95,23 +95,21 @@
     tweetnacl "^1.0.3"
     uuid "^8.1.0"
 
-"@cord.network/vc-export@^0.7.8-1":
-  version "0.7.8-1"
-  resolved "https://registry.yarnpkg.com/@cord.network/vc-export/-/vc-export-0.7.8-1.tgz#cf1d8894eba91e4c189a879665de8062e4f2b3f9"
-  integrity sha512-Efy8iQOPBHSepyL0d76t0vLRR7lQntkHCT0O9f4eDFobTDUrKP902H1GG6i89KFT3uSr8BX4eYqi1OEwyKUpYA==
+"@cord.network/vc-export@^0.7.8-6":
+  version "0.7.8-6"
+  resolved "https://registry.yarnpkg.com/@cord.network/vc-export/-/vc-export-0.7.8-6.tgz#2de3ccfb8fd17db4739c20e0d6728007e0b0377f"
+  integrity sha512-pt5veLX2xweNJ2pwgVquA7IKCq7sbnerO9r8L5vGf1kuRy+KdcC5nNOdqxc5oFKV+4rFCkMeUsw9zTL0QClwqg==
   dependencies:
-    "@cord.network/modules" "0.7.8-1"
-    "@cord.network/network" "0.7.8-1"
-    "@cord.network/types" "0.7.8-1"
-    "@cord.network/utils" "0.7.8-1"
-    "@digitalbazaar/vc" "^4.0.0"
+    "@cord.network/modules" "0.7.8-6"
+    "@cord.network/network" "0.7.8-6"
+    "@cord.network/types" "0.7.8-6"
+    "@cord.network/utils" "0.7.8-6"
+    "@digitalbazaar/vc" "^5.0.0"
     "@polkadot/api" "^9.4.1"
     "@polkadot/api-augment" "^9.4.1"
     "@polkadot/types" "^9.4.1"
     "@polkadot/util" "^10.0.0"
     "@polkadot/util-crypto" "^10.0.0"
-    jsonld "^6.0.0"
-    jsonld-signatures "^10.0.0"
 
 "@digitalbazaar/http-client@^3.2.0":
   version "3.2.0"
@@ -122,14 +120,14 @@
     ky-universal "^0.10.1"
     undici "^5.2.0"
 
-"@digitalbazaar/vc@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@digitalbazaar/vc/-/vc-4.0.0.tgz#769349b1a97f7cafaf16d5bf83655d7af3f5fde1"
-  integrity sha512-aE0w0/S6UOoRShJ79kARQU1jaNcsfNBcD/oxBfdR1X8Y7QaROtAc+Hk3uH4V2QIiOKA2LoPrh9YvlSH4KH6tFw==
+"@digitalbazaar/vc@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@digitalbazaar/vc/-/vc-5.0.0.tgz#20180fb492cb755eb2c6b6df9a17f7407d5e4b5a"
+  integrity sha512-XmLM7Ag5W+XidGnFuxFIyUFSMnHnWEMJlHei602GG94+WzFJ6Ik8txzPQL8T18egSoiTsd1VekymbIlSimhuaQ==
   dependencies:
     credentials-context "^2.0.0"
-    jsonld "^6.0.0"
-    jsonld-signatures "^10.0.0"
+    jsonld "^8.0.0"
+    jsonld-signatures "^11.0.0"
 
 "@eslint/eslintrc@^1.3.0":
   version "1.3.0"
@@ -2117,19 +2115,19 @@ jsonify@~0.0.0:
   resolved "https://registry.npmjs.org/jsonify/-/jsonify-0.0.0.tgz"
   integrity sha512-trvBk1ki43VZptdBI5rIlG4YOzyeH/WefQt5rj1grasPn4iiZWKet8nkgc4GlsAylaztn0qZfUYOiTsASJFdNA==
 
-jsonld-signatures@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/jsonld-signatures/-/jsonld-signatures-10.0.0.tgz#7342d70479f8f450148086c96e48517deeaefdf3"
-  integrity sha512-Zvwwm2xO93QUaEi8LQGh96Sk2J9TS/VLTuXP+WiHQzwKEryNs/2r/1dcaGJ2y5uIHCwPB1nYq0W1A+U2uOvHUA==
+jsonld-signatures@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/jsonld-signatures/-/jsonld-signatures-11.0.0.tgz#a4445de53fda33969a61d3c1eb9b9658236a998c"
+  integrity sha512-2xPJTzJtvqUCDqF/ACdc48415D/GpyAl0ygnOdPi9R2UlF+bmY/hDAXJq1EakZCGmBa21aBHM7LcydAcfE3DHA==
   dependencies:
-    jsonld "^6.0.0"
+    jsonld "^8.0.0"
     security-context "^4.0.0"
-    serialize-error "^8.0.1"
+    serialize-error "^8.1.0"
 
-jsonld@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-6.0.0.tgz#560a8a871dce72aba5d4c6b08356438d863d62fb"
-  integrity sha512-1SkN2RXhMCTCSkX+bzHvr9ycM2HTmjWyV41hn2xG7k6BqlCgRjw0zHmuqfphjBRPqi1gKMIqgBCe/0RZMcWrAA==
+jsonld@^8.0.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-8.1.0.tgz#06c71c0c1eff9be81140843362ce77622d90d67a"
+  integrity sha512-6tYhiEVYO3rTcoYCGCArw8SqawuW0hf/cqmaE5WbX44CGb7d8N2UFvmUj9OYkJhChD98bfdPljUj7S39MrzsHg==
   dependencies:
     "@digitalbazaar/http-client" "^3.2.0"
     canonicalize "^1.0.1"
@@ -2909,7 +2907,7 @@ send@0.18.0:
     range-parser "~1.2.1"
     statuses "2.0.1"
 
-serialize-error@^8.0.1:
+serialize-error@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/serialize-error/-/serialize-error-8.1.0.tgz#3a069970c712f78634942ddd50fbbc0eaebe2f67"
   integrity sha512-3NnuWfM6vBYoy5gZFvHiYsVbafvI9vZv/+jlIigFn4oP4zjNPK3LhcY0xSCgeb1a5L8jO71Mit9LlNoi2UfDDQ==
@@ -3322,10 +3320,10 @@ typescript-logging@^0.6.4:
   dependencies:
     stacktrace-js "1.3.1"
 
-typescript@^4.1.2:
-  version "4.7.4"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.7.4.tgz"
-  integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
+typescript@^4.8.0:
+  version "4.9.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
+  integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
 
 uglify-js@^3.1.4:
   version "3.16.3"

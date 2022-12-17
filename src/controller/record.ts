@@ -5,6 +5,7 @@ import { Stream as StreamCord } from "../cord/stream";
 import { Record as RecordEntity } from "../entity/Record";
 import { Schema as SchemaEntity } from "../entity/Schema";
 
+
 export class Record {
   public static async create(req: express.Request, res: express.Response) {
     const data = req.body;
