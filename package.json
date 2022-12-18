@@ -11,6 +11,13 @@
     "keywords": [],
     "author": "Dhiway",
     "license": "Apache v2.0",
+    "overrides": {
+	"@polkadot/wasm-crypto": "6.4.1",
+	"@polkadot/wasm-util": "6.4.1",
+	"@polkadot/util": "10.2.1",
+	"@polkadot/util-crypto": "10.2.1",
+	"@polkadot/keyring": "10.2.1",
+	"@polkadot/wasm-util-wasm": "6.4.1"},
     "dependencies": {
         "@cord.network/sdk": "^0.7.8-6",
         "@cord.network/vc-export": "^0.7.8-6",
