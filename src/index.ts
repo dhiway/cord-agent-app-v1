@@ -56,6 +56,12 @@ async function main() {
   const accountConfiguration: AccountConfiguration =
     await CordInit.getConfiguration();
 
+  console.log("CORD Initialized");
+  console.log("Stash Account - ", accountConfiguration.stashAccount.address);
+  console.log(
+    "Signing Account - ",
+    accountConfiguration.signingAccount.address
+  );
 }
 
 main().catch((e) => console.log(e));
