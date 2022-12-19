@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import { app, server } from "./server";
 import { Init as CordInit, AccountConfiguration } from "./cord/init";
 import { dbConfig } from "./config/dbconfig";
+import ScoreRouter from "./router/score";
 import SchemaRouter from "./router/schema";
 import SpaceRouter from "./router/space";
 import RecordRouter from "./router/record";
@@ -15,6 +16,7 @@ const openApiDocumentation = JSON.parse(
   fs.readFileSync("./apis.json").toString()
 );
 
+app.use("/api/v1/scores", ScoreRouter);
 app.use("/api/v1/schemas", SchemaRouter);
 app.use("/api/v1/spaces", SpaceRouter);
 app.use("/api/v1/:spaceId/records", RecordRouter);
