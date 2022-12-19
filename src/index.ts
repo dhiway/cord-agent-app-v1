@@ -9,6 +9,7 @@ import ScoreRouter from "./router/score";
 import SchemaRouter from "./router/schema";
 import SpaceRouter from "./router/space";
 import RecordRouter from "./router/record";
+import VerifyRouter from "./router/verify";
 
 const { PORT, STASH_URI, SIGNING_URI } = process.env;
 
@@ -20,6 +21,7 @@ app.use("/api/v1/scores", ScoreRouter);
 app.use("/api/v1/schemas", SchemaRouter);
 app.use("/api/v1/spaces", SpaceRouter);
 app.use("/api/v1/:spaceId/records", RecordRouter);
+app.use("/api/v1/verify", VerifyRouter);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 

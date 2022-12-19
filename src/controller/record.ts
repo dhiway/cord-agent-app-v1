@@ -1,6 +1,9 @@
 import express from "express";
 import { getConnection } from "typeorm";
 
+import * as Cord from '@cord.network/sdk';
+import * as VCUtils from '@cord.network/vc-export';
+
 import { Stream as StreamCord } from "../cord/stream";
 import { Record as RecordEntity } from "../entity/Record";
 import { Schema as SchemaEntity } from "../entity/Schema";
@@ -295,6 +298,48 @@ export class Record {
     }
   }
 
+  public static async verify(req: express.Request, res: express.Response) {
+    let data = req.body;
+
+    /* data as part of VC */
+    const vc = data.vc;
+
+    const id = vc?.id;
+    if (!id) {
+       return res.status(400).json({error: "Identity of VC missing"});
+    }
+
+    const stream = await Cord.Stream.query(id.replace('cord:cord:',''))
+
+    let digestResult: any = false;
+    let streamResult: any = false;
+    let streamSignatureResult: any = false;
+
+    if (vc?.proof && vc.proof[0]) {
+    streamSignatureResult =
+      await VCUtils.verification.verifyStreamSignatureProof(
+        vc,
+        vc.proof[0]
+      )
+    }
+    if (vc?.proof && vc.proof[1]) {
+    streamResult = await VCUtils.verification.verifyStreamProof(
+        vc,
+        vc.proof[1]
+    )
+    }
+    if (vc?.proof && vc.proof[2]) {
+     digestResult = await VCUtils.verification.verifyCredentialDigestProof(
+      vc, vc.proof[2]
+    )
+    }
+    return res.status(200).json({
+       signature: streamSignatureResult,
+       stream: streamResult,
+       digest: digestResult,
+    });
+  }
+
   public static async delete(req: express.Request, res: express.Response) {
     try {
       let record = await getConnection()
@@ -311,7 +356,7 @@ export class Record {
       if (record.active) {
         return res.status(404).json({ error: "Record is anchored" });
       }
-      
+
       await getConnection()
         .createQueryBuilder()
         .delete()
