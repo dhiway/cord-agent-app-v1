@@ -13,7 +13,7 @@ export class Score {
 
     const orgAccount = accountConfiguration.signingAccount;
 
-    const scoreContent = { ...score };
+    const scoreContent = { ...score, entity: orgAccount.address };
     try {
       const newScore = Cord.Score.fromJournalProperties(
         scoreContent,

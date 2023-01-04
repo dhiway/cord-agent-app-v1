@@ -26,27 +26,28 @@ export class Score {
 
     try {
       const response = await ScoreCord.entry(data.score);
-      if (response.score) {
-        /* success */
-        let score = new ScoreEntity();
-        score.entity = data.score.entity;
-        score.identifier = response.score?.identifier?.replace("score:cord:", "");
-        score.uid = data.score.uid;
-        score.tid = data.score.tid;
-        score.collector = data.score.controller;
-        score.requestor = data.score.requestor;
-        score.type = data.score.type;
-        score.score = data.score.score;
-	
-        await getConnection().manager.save(score);
-        res.json({ result: "SUCCESS", score: response.score?.identifier });
-      } else {
-        res.status(400).json({
-          error: response.error,
-        });
-      }
+	if (response.score) {
+            /* success */
+            let score = new ScoreEntity();
+            score.entity = response.score.entry.entity ?? '';
+            score.identifier = response.score?.identifier?.replace("score:cord:", "");
+            score.uid = response.score.entry.uid;
+            score.tid = response.score.entry.tid;
+            score.collector = response.score.entry.collector ?? '';
+            score.requestor = response.score.entry.requestor ?? '';
+            score.type = data.score.type ?? 'overall';
+	    score.latest = true;
+            score.score = response.score.entry.score;
+
+            await getConnection().manager.save(score);
+            res.json({ result: "SUCCESS", score: response.score?.identifier });
+	} else {
+            res.status(400).json({
+		error: response.error,
+            });
+	}
     } catch (err) {
-      res.status(500).json({ error: err });
+	res.status(500).json({ error: err });
     }
   }
 
@@ -55,7 +56,7 @@ export class Score {
       const score = await getConnection()
         .getRepository(ScoreEntity)
         .createQueryBuilder("score")
-        .where("score.identity = :id", {
+        .where("score.identifier = :id", {
           id: req.params.id?.replace("score:cord:", ""),
         })
         .getOne();

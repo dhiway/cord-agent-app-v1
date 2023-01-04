@@ -492,6 +492,128 @@
                     }
                 }
             }
+        },
+	"/api/v1/scores": {
+            "post": {
+                "tags": ["Score", "Rating"],
+                "description": "Create a score (rating) entry",
+                "operationId": "scoreCreate",
+                "requestBody": {
+                    "description": "Provide/Enter a score to a given entity",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+				"type": "object",
+				"description": "Score entry details",
+				"properties": {
+				    "score": {
+					"type": "object",
+					"properties": {
+					    "entity": {
+						"type": "string",
+						"description": "ID of the entity (address / key on chain)",
+						"example": "gupta-kirana-store public id"
+					    },
+					    "uid": {
+						"type": "string",
+						"description": "Identifier of the application",
+						"example": "${application}+${seller}"
+					    },
+					    "tid": {
+						"type": "string",
+						"description": "Identifier of the transaction",
+						"example": "unique-id - uuid()"
+					    },
+					    "collector": {
+						"type": "string",
+						"description": "Id of the seller (address/key on chain)",
+						"example": "${seller} public id"
+					    },
+					    "requestor": {
+						"type": "string",
+						"description": "Identifier of the application",
+						"example": "${application} public id"
+					    },
+					    "type": {
+						"type": "string",
+						"description": "type of the score, 'overall', or 'delivery'",
+						"example": "overall"
+					    },
+					    "score": {
+						"type": "number",
+						"description": "A floating point number between 0.1 to 5.0, to indicate the score of the user.",
+						"example": "4.2"
+					    }
+					}
+				    }
+				}
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "New Score added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+				    "properties": {
+					"score": {
+					    "type": "string",
+					    "description": "Score identifier"
+					}
+				    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "example": {
+                                    "error": "entity is required field"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+	},
+	"/api/v1/scores/{identifier}": {
+            "get": {
+                "tags": ["Score", "Rating"],
+                "description": "Get score of the identifier",
+                "operationId": "scoreShow",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "identifier",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Score Identifier"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of Records",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
