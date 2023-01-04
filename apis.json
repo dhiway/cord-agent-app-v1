@@ -17,12 +17,12 @@
     },
     "servers": [
         {
-            "url": "http://localhost:5001/",
-            "description": "Local server"
+            "url": "https://agent.demo.dhiway.com",
+            "description": "Demo server"
         },
         {
-            "url": "https://api.demo.cord.network",
-            "description": "Demo server"
+            "url": "http://localhost:5001/",
+            "description": "Local server"
         }
     ],
 
@@ -449,6 +449,49 @@
                     }
                 }
             }
+	},
+        "/api/v1/verify": {
+            "post": {
+                "tags": ["Verification"],
+                "description": "Verify a give Verifiable Credential",
+                "operationId": "recordVerify",
+                "requestBody": {
+                    "description": "Verify the given VC",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RecordVerify"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Record Verified",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Record"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "example": {
+                                    "error": "proof mismatch"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -518,24 +561,24 @@
             "SchemaRequest": {
                 "type": "object",
                 "properties": {
-		    "schema": {
-			"type": "object",
-			"properties": {
-			    "description": {
-				"$ref": "#/components/schemas/SpaceDescription"
-			    },
-			    "title": {
-				"$ref": "#/components/schemas/SpaceName"
-			    },
-			    "properties": {
-				"type": "object"
-			    },
-			    "context": {
-				"type": "string",
-				"example": "http://json-schema.org/draft-07/schema#"
-			    }
-			}
-		    }
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "description": {
+                                "$ref": "#/components/schemas/SpaceDescription"
+                            },
+                            "title": {
+                                "$ref": "#/components/schemas/SpaceName"
+                            },
+                            "properties": {
+                                "type": "object"
+                            },
+                            "context": {
+                                "type": "string",
+                                "example": "http://json-schema.org/draft-07/schema#"
+                            }
+                        }
+                    }
                 }
             },
             "Schema": {
@@ -584,18 +627,18 @@
             "SpaceRequest": {
                 "type": "object",
                 "properties": {
-		    "space": {
-			"type": "object",
-			"properties": {
-			    "title": {
-				"$ref": "#/components/schemas/SpaceName"
-			    },
-			    "description": {
-				"$ref": "#/components/schemas/SpaceDescription"
-			    }
-			}
-		    }
-		}
+                    "space": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "$ref": "#/components/schemas/SpaceName"
+                            },
+                            "description": {
+                                "$ref": "#/components/schemas/SpaceDescription"
+                            }
+                        }
+                    }
+                }
             },
             "SpaceListing": {
                 "type": "object",
@@ -779,6 +822,17 @@
                         "description": "Verification URL for the record",
                         "example": "https://dway.io/m/e248dfa8-0409-11ed-ba3b-138cbf9c1d66?api=1",
                         "required": false
+                    }
+                }
+            },
+            "RecordVerify": {
+                "type": "object",
+                "description": "Record Verification Content",
+                "properties": {
+                    "vc": {
+                        "type": "object",
+                        "description": "VC output from record Create",
+                        "example": "{}"
                     }
                 }
             }
