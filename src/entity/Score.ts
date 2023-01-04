@@ -24,7 +24,7 @@ export class Score {
     @Column()
     latest?: boolean;
 
-    @Column()
+    @Column({default: null, nullable: true})
     entity?: string;
 
     @Column({length: 64})
@@ -33,10 +33,10 @@ export class Score {
     @Column({length: 64})
     tid?: string;
 
-    @Column()
+    @Column({default: null, nullable: true})
     collector?: string;
 
-    @Column()
+    @Column({default: null, nullable: true})
     requestor?: string;
 
     @Column()

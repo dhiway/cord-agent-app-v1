@@ -29,15 +29,17 @@ export class Score {
       if (response.score) {
         /* success */
         let score = new ScoreEntity();
-        score.entity = data.score.entity;
+        score.entity = data.score.entity ?? '';
         score.identifier = response.score?.identifier?.replace("score:cord:", "");
         score.uid = data.score.uid;
         score.tid = data.score.tid;
-        score.collector = data.score.controller;
-        score.requestor = data.score.requestor;
+        score.collector = data.score.controller ?? '';
+        score.requestor = data.score.requestor ?? '';
         score.type = data.score.type;
-        score.score = data.score.score;
-	
+	score.latest = true;
+        score.score = data.score.score * 10;
+
+	console.log("score", score);
         await getConnection().manager.save(score);
         res.json({ result: "SUCCESS", score: response.score?.identifier });
       } else {
@@ -55,7 +57,7 @@ export class Score {
       const score = await getConnection()
         .getRepository(ScoreEntity)
         .createQueryBuilder("score")
-        .where("score.identity = :id", {
+        .where("score.identifier = :id", {
           id: req.params.id?.replace("score:cord:", ""),
         })
         .getOne();
