@@ -12,12 +12,13 @@
     "author": "Dhiway",
     "license": "Apache v2.0",
     "overrides": {
-	"@polkadot/wasm-crypto": "6.4.1",
-	"@polkadot/wasm-util": "6.4.1",
-	"@polkadot/util": "10.2.1",
-	"@polkadot/util-crypto": "10.2.1",
-	"@polkadot/keyring": "10.2.1",
-	"@polkadot/wasm-util-wasm": "6.4.1"},
+        "@polkadot/wasm-crypto": "6.4.1",
+        "@polkadot/wasm-util": "6.4.1",
+        "@polkadot/util": "10.2.1",
+        "@polkadot/util-crypto": "10.2.1",
+        "@polkadot/keyring": "10.2.1",
+        "@polkadot/wasm-util-wasm": "6.4.1"
+    },
     "dependencies": {
         "@cord.network/sdk": "^0.7.8-6",
         "@cord.network/vc-export": "^0.7.8-6",
@@ -30,7 +31,7 @@
         "handlebars": "^4.7.6",
         "json-diff": "^0.7.3",
         "json-stable-stringify": "^1.0.1",
-        "jsonwebtoken": "^8.5.1",
+        "jsonwebtoken": "^9.0.0",
         "memorystore": "^1.6.4",
         "multer": "^1.4.5-lts.1",
         "node-fetch": "^2.6.7",
