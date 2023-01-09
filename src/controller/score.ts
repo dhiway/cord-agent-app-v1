@@ -1,5 +1,6 @@
 import express from "express";
 import { getConnection } from "typeorm";
+import { ScoreType } from "@cord.network/types";
 
 import { Score as ScoreCord } from "../cord/score";
 import { Score as ScoreEntity } from "../entity/Score";
@@ -20,6 +21,13 @@ export class Score {
     if (!data.score) {
       res.status(400).json({
         error: "'score' is a required field, with title and description",
+      });
+      return;
+    }
+
+    if(!data.score.entity && !data.score.requestor && !data.score.collector) {
+      res.status(400).json({
+          error: "'entity', 'requestor' and 'collector' are required fields inside score",
       });
       return;
     }
@@ -65,5 +73,17 @@ export class Score {
     } catch (err) {
       res.status(500).json({ error: err });
     }
+  }
+
+    public static async showEntity(req: express.Request, res: express.Response) {
+	let entity = req.params.entity;
+	let type = req.query.type ?? 'overall';
+	try {
+	    const response = await ScoreCord.query(entity, type !== 'overall' ? ScoreType.delivery : ScoreType.overall)
+	
+	    res.json(response);
+	} catch (err) {
+	    res.status(500).json({ error: err });
+	}
   }
 }

@@ -13,11 +13,25 @@ export class Score {
 
     const orgAccount = accountConfiguration.signingAccount;
 
-    const scoreContent = { ...score, entity: orgAccount.address };
+      /// business entity
+    const entity: any = Cord.Identity.buildFromURI(`//${score.entity}`, {
+      signingKeyPairType: "sr25519",
+    });
+
+      /// buyer application
+    const collector: any = Cord.Identity.buildFromURI(`//${score.collector}`, {
+      signingKeyPairType: "sr25519",
+    });
+      /// seller application
+    const requestor: any = Cord.Identity.buildFromURI(`//${score.requestor}`, {
+      signingKeyPairType: "sr25519",
+    });
+      
+    const scoreContent = { ...score, entity: entity.address, collector: collector.address, requestor: requestor.address };
     try {
       const newScore = Cord.Score.fromJournalProperties(
         scoreContent,
-        orgAccount
+        entity
       );
       const scoreCreationExtrinsic = await Cord.Score.entries(newScore);
       const tx = await Cord.Chain.signAndSubmitTx(
@@ -52,8 +66,13 @@ export class Score {
 
     const orgAccount = accountConfiguration.signingAccount;
 
+      /// business entity
+      const entityId: any = Cord.Identity.buildFromURI(`//${entity}`, {
+      signingKeyPairType: "sr25519",
+    });
+
     try {
-      const score = await Cord.Score.query(entity, type);
+      const score = await Cord.Score.query(entityId.address, type);
       return { entity: entity, type: type, score: score };
     } catch (e: any) {
       console.log(e.errorCode, "-", e.message);
