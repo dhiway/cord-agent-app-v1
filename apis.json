@@ -495,7 +495,7 @@
         },
 	"/api/v1/scores": {
             "post": {
-                "tags": ["Score", "Rating"],
+                "tags": ["Score"],
                 "description": "Create a score (rating) entry",
                 "operationId": "scoreCreate",
                 "requestBody": {
@@ -511,12 +511,12 @@
 					"properties": {
 					    "entity": {
 						"type": "string",
-						"description": "ID of the entity (address / key on chain)",
-						"example": "gupta-kirana-store public id"
+						"description": "ID of the entity (business entity)",
+						"example": "gupta-kirana-store id"
 					    },
 					    "uid": {
 						"type": "string",
-						"description": "Identifier of the application",
+						"description": "Identifier",
 						"example": "${application}+${seller}"
 					    },
 					    "tid": {
@@ -526,13 +526,13 @@
 					    },
 					    "collector": {
 						"type": "string",
-						"description": "Id of the seller (address/key on chain)",
-						"example": "${seller} public id"
+						"description": "Id of the buyer application)",
+						"example": "${buyer-application} id"
 					    },
 					    "requestor": {
 						"type": "string",
-						"description": "Identifier of the application",
-						"example": "${application} public id"
+						"description": "Identifier of the seller application",
+						"example": "${seller-application} id"
 					    },
 					    "type": {
 						"type": "string",
@@ -587,7 +587,7 @@
 	},
 	"/api/v1/scores/{identifier}": {
             "get": {
-                "tags": ["Score", "Rating"],
+                "tags": ["Score"],
                 "description": "Get score of the identifier",
                 "operationId": "scoreShow",
                 "parameters": [
@@ -603,7 +603,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Records",
+                        "description": "Details of the score identifier from the DB",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -614,7 +614,46 @@
                     }
                 }
             }
-        }
+        },
+        "/api/v1/scores/entity/{entity}": {
+            "get": {
+                "tags": ["Score"],
+                "description": "Get score of the entity (from chain)",
+                "operationId": "scoreShowEntity",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "entity",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Entity passed in API during entry operation"
+                    },
+                    {
+                        "in": "query",
+                        "name": "type",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "description": "type of the score, 'overall' or 'delivery'"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the entity score from chain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+	}
     },
     "components": {
         "securitySchemas": {
