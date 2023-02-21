@@ -2,9 +2,9 @@ FROM node:18-slim
 
 WORKDIR /app
 
-RUN apt update && apt install -y python3 make gcc g++
+RUN apt update && apt install -y python3 make gcc g++ git
 COPY package.json package-lock.json  /app/
-RUN npm ci
+RUN npm install --legacy-peer-deps
 
 COPY . .
 RUN yarn build

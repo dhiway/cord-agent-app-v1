@@ -8,6 +8,12 @@ import { Stream as StreamCord } from "../cord/stream";
 import { Record as RecordEntity } from "../entity/Record";
 import { Schema as SchemaEntity } from "../entity/Schema";
 
+
+const { EcdsaSecp256k1KeyClass2019,
+		   EcdsaSecp256k1Signature2019,
+		   defaultDocumentLoader} = require('@transmute/lds-ecdsa-secp256k1-2019');
+
+
 export class Record {
   public static async create(req: express.Request, res: express.Response) {
     const data = req.body;
@@ -309,8 +315,6 @@ export class Record {
        return res.status(400).json({error: "Identity of VC missing"});
     }
 
-    const stream = await Cord.Stream.query(id.replace('cord:cord:',''))
-
     let digestResult: any = false;
     let streamResult: any = false;
     let streamSignatureResult: any = false;
@@ -333,6 +337,7 @@ export class Record {
       vc, vc.proof[2]
     )
     }
+    console.log("result - ", digestResult, streamResult, streamSignatureResult);
     return res.status(200).json({
        signature: streamSignatureResult,
        stream: streamResult,
@@ -348,16 +353,55 @@ export class Record {
       /* data as part of VC */
       const credential = data.vc;
 
+      let result: any = {};
       // Required to set up a suite instance with private key
-      const ed = await import('@digitalbazaar/ed25519-verification-key-2020');
-      const eds = await import('@digitalbazaar/ed25519-signature-2020');
+      /*
+      {
+      const ed = await import('@digitalbazaar/ed25519-verification-key-2018');
+      const eds = await import('@digitalbazaar/ed25519-signature-2018');
 
-      const keyPair = await ed.Ed25519VerificationKey2020.generate();
+      const keyPair = await ed.Ed25519VerificationKey2018.generate();
 
-      const suite = new eds.Ed25519Signature2020({key: keyPair});
+      const suite = new eds.Ed25519Signature2018({key: keyPair});
+       result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: vcjs.defaultDocumentLoader});
+      }
+      */
 
-      const result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: vcjs.defaultDocumentLoader});
+      /* (2020)
+	{
+	const ed = await import('@digitalbazaar/ed25519-verification-key-2018');
+	const eds = await import('@digitalbazaar/ed25519-signature-2018');
+	
+	const keyPair = await ed.Ed25519VerificationKey2018.generate();
+	
+	const suite = new eds.Ed25519Signature2018({key: keyPair});
+      result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: vcjs.defaultDocumentLoader});
+	}
+      */
 
+      {
+	  const key = new EcdsaSecp256k1KeyClass2019({
+	      id:
+	      'did:elem:EiChaglAoJaBq7bGWp6bA5PAQKaOTzVHVXIlJqyQbljfmg#qfknmVDhMi3Uc190IHBRfBRqMgbEEBRzWOj1E9EmzwM',
+	      controller: 'did:elem:EiChaglAoJaBq7bGWp6bA5PAQKaOTzVHVXIlJqyQbljfmg',
+	      privateKeyJwk: {
+		  kty: 'EC',
+		  crv: 'secp256k1',
+		  d: 'wNZx20zCHoOehqaBOFsdLELabfv8sX0612PnuAiyc-g',
+		  x: 'NbASvplLIO_XTzP9R69a3MuqOO0DQw2LGnhJjirpd4w',
+		  y: 'EiZOvo9JWPz1yGlNNW66IV8uA44EQP_Yv_E7OZl1NG0',
+		  kid: 'qfknmVDhMi3Uc190IHBRfBRqMgbEEBRzWOj1E9EmzwM',
+	      },
+	  });
+	  
+	  const suite = new EcdsaSecp256k1Signature2019({
+	      key,
+	  });
+	  
+          result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: vcjs.defaultDocumentLoader});
+      }
+
+      console.log("Result : ", result);
       return res.status(200).json({
 	  result
       });
