@@ -340,6 +340,29 @@ export class Record {
     });
   }
 
+  public static async verifyVc(req: express.Request, res: express.Response) {
+      let data = req.body;
+
+      const vcjs = await import('@digitalbazaar/vc');
+
+      /* data as part of VC */
+      const credential = data.vc;
+
+      // Required to set up a suite instance with private key
+      const ed = await import('@digitalbazaar/ed25519-verification-key-2020');
+      const eds = await import('@digitalbazaar/ed25519-signature-2020');
+
+      const keyPair = await ed.Ed25519VerificationKey2020.generate();
+
+      const suite = new eds.Ed25519Signature2020({key: keyPair});
+
+      const result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: vcjs.defaultDocumentLoader});
+
+      return res.status(200).json({
+	  result
+      });
+  }
+
   public static async delete(req: express.Request, res: express.Response) {
     try {
       let record = await getConnection()

@@ -22,6 +22,9 @@
     "dependencies": {
         "@cord.network/sdk": "^0.7.8-6",
         "@cord.network/vc-export": "^0.7.8-6",
+        "@digitalbazaar/ed25519-signature-2020": "^5.2.0",
+        "@digitalbazaar/ed25519-verification-key-2020": "^4.1.0",
+        "@digitalbazaar/vc": "^6.0.0",
         "dayjs": "^1.10.4",
         "express": "^4.17.1",
         "express-session": "^1.17.1",
