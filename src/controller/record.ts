@@ -358,7 +358,7 @@ export class Record {
 
       const selfSignatureResult =
 	    await VCUtils.verification.verifySelfSignatureProof(
-		vp,
+		vcs[0],
 		vp.proof[0],
 		vcChallenge
 	    );
@@ -384,7 +384,7 @@ export class Record {
 	      }
 	  }
 	  response.push({
-	      vc: vc,
+	      vc: vc.id,
 	      signature: streamSignatureResult,
 	      stream: streamResult,
 	      digest: digestResult,
