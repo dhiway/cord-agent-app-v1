@@ -24,3 +24,7 @@ Note that on the CORD Network, we will only have transaction of extrinsic calls 
 
 For example, the #MARK Studio (https://studio.dhiway.com) is one of the extended version of this agent, which has evolved to provide more APIs and is hosted as multi-user SaaS project. To achieve it, studio project has implemented authentication logic, and many other integrations. This Agent project is a base to extend CORD interaction with any other application.
 
+
+### NOTEs
+
+To resolve did:elem, tried "@transmute/lds-ecdsa-secp256k1-2019" package, but not very successful. Otherwise, VC-js should work

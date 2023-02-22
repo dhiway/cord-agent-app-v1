@@ -415,7 +415,7 @@ export class Record {
       }
       */
 
-      /* (2020)
+      /* (2020) */
 	{
 	const ed = await import('@digitalbazaar/ed25519-verification-key-2018');
 	const eds = await import('@digitalbazaar/ed25519-signature-2018');
@@ -425,7 +425,8 @@ export class Record {
 	const suite = new eds.Ed25519Signature2018({key: keyPair});
       result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: vcjs.defaultDocumentLoader});
 	}
-      */
+
+	/*
 
       {
 	  const key = new EcdsaSecp256k1KeyClass2019({
@@ -448,7 +449,7 @@ export class Record {
 	  
           result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: defaultDocumentLoader});
       }
-
+      */
       console.log("Result : ", result);
       return res.status(200).json({
 	  result
