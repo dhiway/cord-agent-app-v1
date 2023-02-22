@@ -348,9 +348,9 @@ export class Record {
       const vp = data.vp;
       const vcChallenge = data.challenge;
 
-      const id = vp?.id;
-      if (!id) {
-	  return res.status(400).json({error: "Identity of VP missing"});
+      const holder = vp?.holder;
+      if (!holder) {
+	  return res.status(400).json({error: "Holder Identity of VP missing"});
       }
 
       let response: any[] = [];
