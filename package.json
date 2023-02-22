@@ -20,8 +20,8 @@
         "@polkadot/wasm-util-wasm": "6.4.1"
     },
     "dependencies": {
-        "@cord.network/sdk": "^0.7.8-6",
-        "@cord.network/vc-export": "^0.7.8-6",
+        "@cord.network/sdk": "^0.7.11-1",
+        "@cord.network/vc-export": "^0.7.11-1",
         "@digitalbazaar/ed25519-signature-2018": "^4.0.0",
         "@digitalbazaar/ed25519-signature-2020": "^5.2.0",
         "@digitalbazaar/ed25519-verification-key-2018": "^4.0.0",

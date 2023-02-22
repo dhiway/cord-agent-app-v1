@@ -30,7 +30,7 @@ services:
             - postgres3
         networks:
             - local
-        command: npm run start
+        command: node ./dist/index.js
 
     postgres3:
         image: postgres:14.5-alpine

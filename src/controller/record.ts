@@ -319,30 +319,78 @@ export class Record {
     let streamResult: any = false;
     let streamSignatureResult: any = false;
 
-    if (vc?.proof && vc.proof[0]) {
-    streamSignatureResult =
-      await VCUtils.verification.verifyStreamSignatureProof(
-        vc,
-        vc.proof[0]
-      )
+    for (let i = 0; i < vc?.proof?.length ?? 0; i++) {
+    	const p = vc.proof[i];
+	if (p.type === VCUtils.constants.CORD_STREAM_SIGNATURE_PROOF_TYPE) {
+	    streamSignatureResult =
+		await VCUtils.verification.verifyStreamSignatureProof(vc, p);
+	}
+    
+	if (p.type === VCUtils.constants.CORD_ANCHORED_PROOF_TYPE) {
+	    streamResult = await VCUtils.verification.verifyStreamProof(vc, p);
+	}
+
+	if (p.type === VCUtils.constants.CORD_CREDENTIAL_DIGEST_PROOF_TYPE) {
+	    digestResult = await VCUtils.verification.verifyCredentialDigestProof(vc, p);
+	}
     }
-    if (vc?.proof && vc.proof[1]) {
-    streamResult = await VCUtils.verification.verifyStreamProof(
-        vc,
-        vc.proof[1]
-    )
-    }
-    if (vc?.proof && vc.proof[2]) {
-     digestResult = await VCUtils.verification.verifyCredentialDigestProof(
-      vc, vc.proof[2]
-    )
-    }
-    console.log("result - ", digestResult, streamResult, streamSignatureResult);
     return res.status(200).json({
        signature: streamSignatureResult,
        stream: streamResult,
        digest: digestResult,
     });
+  }
+
+  public static async verifyVp(req: express.Request, res: express.Response) {
+    let data = req.body;
+
+      /* data as part of VC */
+      const vp = data.vp;
+      const vcChallenge = data.challenge;
+
+      const id = vp?.id;
+      if (!id) {
+	  return res.status(400).json({error: "Identity of VP missing"});
+      }
+
+      let response: any[] = [];
+      let vcs = vp.verifiableCredential;
+
+      const selfSignatureResult =
+	    await VCUtils.verification.verifySelfSignatureProof(
+		vp,
+		vp.proof[0],
+		vcChallenge
+	    );
+
+      for (let j = 0; j < vcs?.length ?? 1; j++) {
+    	  const vc = vcs[j] ?? vcs;
+	  let digestResult: any = false;
+	  let streamResult: any = false;
+	  let streamSignatureResult: any = false;
+	  for (let i = 0; i < vc?.proof?.length ?? 0; i++) {
+    	      const p = vc.proof[i];
+	      if (p.type === VCUtils.constants.CORD_STREAM_SIGNATURE_PROOF_TYPE) {
+		  streamSignatureResult =
+		      await VCUtils.verification.verifyStreamSignatureProof(vc, p);
+	      }
+    
+	      if (p.type === VCUtils.constants.CORD_ANCHORED_PROOF_TYPE) {
+		  streamResult = await VCUtils.verification.verifyStreamProof(vc, p);
+	      }
+
+	      if (p.type === VCUtils.constants.CORD_CREDENTIAL_DIGEST_PROOF_TYPE) {
+		  digestResult = await VCUtils.verification.verifyCredentialDigestProof(vc, p);
+	      }
+	  }
+	  response.push({
+	      vc: vc,
+	      signature: streamSignatureResult,
+	      stream: streamResult,
+	      digest: digestResult,
+	  })
+      }
+      return res.status(200).json({response, selfSignatureResult});
   }
 
   public static async verifyVc(req: express.Request, res: express.Response) {
@@ -398,7 +446,7 @@ export class Record {
 	      key,
 	  });
 	  
-          result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: vcjs.defaultDocumentLoader});
+          result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: defaultDocumentLoader});
       }
 
       console.log("Result : ", result);
