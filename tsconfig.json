@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
 	"target": "ES2015",
-	"module": "commonjs",
-	"lib": ["es5", "es6", "dom"],
+	"module": "nodenext",
+	"lib": ["es5", "es6", "dom", "esnext"],
 	"allowJs": true,
 	"skipLibCheck": true,
 	"outDir": "dist",

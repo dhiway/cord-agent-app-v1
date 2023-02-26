@@ -1,7 +1,8 @@
-FROM node:16-slim
+FROM node:18-slim
 
 WORKDIR /app
 
+# RUN apt update && apt install -y git
 
 COPY package.json  yarn.lock /app/
 RUN yarn

@@ -8,6 +8,12 @@ import { Stream as StreamCord } from "../cord/stream";
 import { Record as RecordEntity } from "../entity/Record";
 import { Schema as SchemaEntity } from "../entity/Schema";
 
+/*
+const { EcdsaSecp256k1KeyClass2019,
+		   EcdsaSecp256k1Signature2019,
+		   defaultDocumentLoader} = require('@transmute/lds-ecdsa-secp256k1-2019');
+*/
+
 export class Record {
   public static async create(req: express.Request, res: express.Response) {
     const data = req.body;
@@ -309,35 +315,145 @@ export class Record {
        return res.status(400).json({error: "Identity of VC missing"});
     }
 
-    const stream = await Cord.Stream.query(id.replace('cord:cord:',''))
-
     let digestResult: any = false;
     let streamResult: any = false;
     let streamSignatureResult: any = false;
 
-    if (vc?.proof && vc.proof[0]) {
-    streamSignatureResult =
-      await VCUtils.verification.verifyStreamSignatureProof(
-        vc,
-        vc.proof[0]
-      )
-    }
-    if (vc?.proof && vc.proof[1]) {
-    streamResult = await VCUtils.verification.verifyStreamProof(
-        vc,
-        vc.proof[1]
-    )
-    }
-    if (vc?.proof && vc.proof[2]) {
-     digestResult = await VCUtils.verification.verifyCredentialDigestProof(
-      vc, vc.proof[2]
-    )
+    for (let i = 0; i < vc?.proof?.length ?? 0; i++) {
+    	const p = vc.proof[i];
+	if (p.type === VCUtils.constants.CORD_STREAM_SIGNATURE_PROOF_TYPE) {
+	    streamSignatureResult =
+		await VCUtils.verification.verifyStreamSignatureProof(vc, p);
+	}
+    
+	if (p.type === VCUtils.constants.CORD_ANCHORED_PROOF_TYPE) {
+	    streamResult = await VCUtils.verification.verifyStreamProof(vc, p);
+	}
+
+	if (p.type === VCUtils.constants.CORD_CREDENTIAL_DIGEST_PROOF_TYPE) {
+	    digestResult = await VCUtils.verification.verifyCredentialDigestProof(vc, p);
+	}
     }
     return res.status(200).json({
        signature: streamSignatureResult,
        stream: streamResult,
        digest: digestResult,
     });
+  }
+
+  public static async verifyVp(req: express.Request, res: express.Response) {
+    let data = req.body;
+
+      /* data as part of VC */
+      const vp = data.vp;
+      const vcChallenge = data.challenge;
+
+      const holder = vp?.holder;
+      if (!holder) {
+	  return res.status(400).json({error: "Holder Identity of VP missing"});
+      }
+
+      let response: any[] = [];
+      let vcs = vp.verifiableCredential;
+
+      const selfSignatureResult =
+	    await VCUtils.verification.verifySelfSignatureProof(
+		vcs[0],
+		vp.proof[0],
+		vcChallenge
+	    );
+
+      for (let j = 0; j < vcs?.length ?? 1; j++) {
+    	  const vc = vcs[j] ?? vcs;
+	  let digestResult: any = false;
+	  let streamResult: any = false;
+	  let streamSignatureResult: any = false;
+	  for (let i = 0; i < vc?.proof?.length ?? 0; i++) {
+    	      const p = vc.proof[i];
+	      if (p.type === VCUtils.constants.CORD_STREAM_SIGNATURE_PROOF_TYPE) {
+		  streamSignatureResult =
+		      await VCUtils.verification.verifyStreamSignatureProof(vc, p);
+	      }
+    
+	      if (p.type === VCUtils.constants.CORD_ANCHORED_PROOF_TYPE) {
+		  streamResult = await VCUtils.verification.verifyStreamProof(vc, p);
+	      }
+
+	      if (p.type === VCUtils.constants.CORD_CREDENTIAL_DIGEST_PROOF_TYPE) {
+		  digestResult = await VCUtils.verification.verifyCredentialDigestProof(vc, p);
+	      }
+	  }
+	  response.push({
+	      vc: vc.id,
+	      signature: streamSignatureResult,
+	      stream: streamResult,
+	      digest: digestResult,
+	  })
+      }
+      return res.status(200).json({response, selfSignatureResult});
+  }
+
+  public static async verifyVc(req: express.Request, res: express.Response) {
+      let data = req.body;
+
+      const vcjs = await import('@digitalbazaar/vc');
+
+      /* data as part of VC */
+      const credential = data.vc;
+
+      let result: any = {};
+      // Required to set up a suite instance with private key
+      /*
+      {
+      const ed = await import('@digitalbazaar/ed25519-verification-key-2018');
+      const eds = await import('@digitalbazaar/ed25519-signature-2018');
+
+      const keyPair = await ed.Ed25519VerificationKey2018.generate();
+
+      const suite = new eds.Ed25519Signature2018({key: keyPair});
+       result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: vcjs.defaultDocumentLoader});
+      }
+      */
+
+      /* (2020) */
+	{
+	const ed = await import('@digitalbazaar/ed25519-verification-key-2018');
+	const eds = await import('@digitalbazaar/ed25519-signature-2018');
+	
+	const keyPair = await ed.Ed25519VerificationKey2018.generate();
+	
+	const suite = new eds.Ed25519Signature2018({key: keyPair});
+      result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: vcjs.defaultDocumentLoader});
+	}
+
+	/*
+
+      {
+	  const key = new EcdsaSecp256k1KeyClass2019({
+	      id:
+	      'did:elem:EiChaglAoJaBq7bGWp6bA5PAQKaOTzVHVXIlJqyQbljfmg#qfknmVDhMi3Uc190IHBRfBRqMgbEEBRzWOj1E9EmzwM',
+	      controller: 'did:elem:EiChaglAoJaBq7bGWp6bA5PAQKaOTzVHVXIlJqyQbljfmg',
+	      privateKeyJwk: {
+		  kty: 'EC',
+		  crv: 'secp256k1',
+		  d: 'wNZx20zCHoOehqaBOFsdLELabfv8sX0612PnuAiyc-g',
+		  x: 'NbASvplLIO_XTzP9R69a3MuqOO0DQw2LGnhJjirpd4w',
+		  y: 'EiZOvo9JWPz1yGlNNW66IV8uA44EQP_Yv_E7OZl1NG0',
+		  kid: 'qfknmVDhMi3Uc190IHBRfBRqMgbEEBRzWOj1E9EmzwM',
+	      },
+	  });
+	  
+	  const suite = new EcdsaSecp256k1Signature2019({
+	      key,
+	  });
+	  
+          result = await vcjs.verifyCredential({credential: credential, suite, documentLoader: defaultDocumentLoader});
+      }
+      */
+      console.log("Result : ", result);
+      return res.status(200).json({
+	  result
+      });
   }
 
   public static async delete(req: express.Request, res: express.Response) {
