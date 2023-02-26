@@ -8,11 +8,11 @@ import { Stream as StreamCord } from "../cord/stream";
 import { Record as RecordEntity } from "../entity/Record";
 import { Schema as SchemaEntity } from "../entity/Schema";
 
-
+/*
 const { EcdsaSecp256k1KeyClass2019,
 		   EcdsaSecp256k1Signature2019,
 		   defaultDocumentLoader} = require('@transmute/lds-ecdsa-secp256k1-2019');
-
+*/
 
 export class Record {
   public static async create(req: express.Request, res: express.Response) {
