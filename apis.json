@@ -2,7 +2,7 @@
     "openapi": "3.0.1",
     "info": {
         "version": "0.0.2",
-        "title": "CORD Agent",
+        "title": "Rating APIs",
         "description": "API interface for CORD SDK",
         "termsOfService": "http://studio.dhiway.com/page/terms-and-conditions",
         "contact": {
@@ -27,17 +27,17 @@
     ],
 
     "paths": {
-        "/api/v1/schemas": {
+        "/login": {
             "post": {
-                "tags": ["Schema"],
-                "description": "Create a schema",
-                "operationId": "schemaCreate",
+                "tags": ["Rating"],
+                "description": "User Login",
+                "operationId": "userLogin",
                 "requestBody": {
-                    "description": "",
+                    "description": "Login details",
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/SchemaRequest"
+                                "$ref": "#/components/schemas/Login"
                             }
                         }
                     },
@@ -45,508 +45,132 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "New schema created",
+                        "description": "Login user",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Schema"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid parameters",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                },
-                                "example": {
-                                    "error": "title is required field"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": ["Schema"],
-                "description": "Get all schemas with the Agent",
-                "operationId": "schemaIndex",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "page",
-                        "schema": {
-                            "type": "number"
-                        },
-                        "required": false,
-                        "description": "page to fetch (used in pagination"
-                    },
-                    {
-                        "in": "query",
-                        "name": "pageSize",
-                        "schema": {
-                            "type": "number"
-                        },
-                        "required": false,
-                        "description": "number of items to fetch (used in pagination"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of schemas",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SchemaListing"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/schemas/{schemaId}": {
-            "get": {
-                "tags": ["Schema"],
-                "description": "Get schema details",
-                "operationId": "schemaShow",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "schemaId",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Schema Identity"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Schema details",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Schema"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/spaces": {
-            "post": {
-                "tags": ["Space"],
-                "description": "Create a space",
-                "operationId": "spaceCreate",
-                "requestBody": {
-                    "description": "",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SpaceRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "New space created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Space"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid parameters",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                },
-                                "example": {
-                                    "error": "name is required field"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": ["Space"],
-                "description": "Get all spaces with the Agent",
-                "operationId": "spaceIndex",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "page",
-                        "schema": {
-                            "type": "number"
-                        },
-                        "required": false,
-                        "description": "page to fetch (used in pagination"
-                    },
-                    {
-                        "in": "query",
-                        "name": "pageSize",
-                        "schema": {
-                            "type": "number"
-                        },
-                        "required": false,
-                        "description": "number of items to fetch (used in pagination"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of spaces",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SpaceListing"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/spaces/{spaceId}": {
-            "get": {
-                "tags": ["Space"],
-                "description": "Get space details",
-                "operationId": "spaceShow",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "spaceId",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Space Identity"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Space details",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Space"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/{spaceId}/records": {
-            "post": {
-                "tags": ["Record"],
-                "description": "Create a Record",
-                "operationId": "recordCreate",
-                "requestBody": {
-                    "description": "Add a record to the given space",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RecordRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "spaceId",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Space ID"
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "New Record created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Record"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid parameters",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                },
-                                "example": {
-                                    "error": "title is required field"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": ["Record"],
-                "description": "Get all records belongs to a space",
-                "operationId": "recordIndex",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "spaceId",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Space ID"
-                    },
-                    {
-                        "in": "query",
-                        "name": "page",
-                        "schema": {
-                            "type": "number"
-                        },
-                        "required": false,
-                        "description": "page to fetch (used in pagination"
-                    },
-                    {
-                        "in": "query",
-                        "name": "pageSize",
-                        "schema": {
-                            "type": "number"
-                        },
-                        "required": false,
-                        "description": "number of items to fetch (used in pagination"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of Records",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/RecordListing"
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "$ref": "#/components/schemas/200_Res_Login"
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                }
-            }
-        },
-        "/api/v1/{spaceId}/records/{recordId}": {
-            "get": {
-                "tags": ["Record"],
-                "description": "Record detail",
-                "operationId": "recordShow",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "spaceId",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Space ID"
                     },
-                    {
-                        "in": "path",
-                        "name": "recordId",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Record ID"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Record details",
+                    "400": {
+                        "description": "Invalid parameters",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Record"
+                                    "$ref": "#/components/schemas/Error"
                                 }
                             }
                         }
                     }
                 }
-            },
+            }
+        },
+
+        "/write-ratings": {
+            "post": {
+                "tags": ["Rating"],
+                "description": "Write the ratings to the chain",
+                "operationId": "writeRatings",
+                "requestBody": {
+                    "description": "Write the ratings to the chain",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Write_ratings"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "New Score added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "$ref": "#/components/schemas/200_Res"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/amend-ratings": {
+            "post": {
+                "tags": ["Rating"],
+                "description": "Revoke ratings to the chain",
+                "operationId": "revokeRatings",
+                "requestBody": {
+                    "description": "revoke the ratings",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RevokeRating"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Revoked Score",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/200_Res_Revoke"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/write-revised-ratings": {
             "put": {
-                "tags": ["Record"],
-                "description": "Update a Record",
-                "operationId": "recordUpdate",
+                "tags": ["Rating"],
+                "description": "Update the rating entry",
+                "operationId": "updateRatings",
                 "requestBody": {
-                    "description": "",
+                    "description": "Update the ratings",
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/RecordRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "spaceId",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Space ID"
-                    },
-                    {
-                        "in": "path",
-                        "name": "recordId",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Record ID"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Record updated",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Record"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid parameters",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                },
-                                "example": {
-                                    "error": "title is required field"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-	},
-        "/api/v1/verify": {
-            "post": {
-                "tags": ["Verification"],
-                "description": "Verify a give Verifiable Credential",
-                "operationId": "recordVerify",
-                "requestBody": {
-                    "description": "Verify the given VC",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RecordVerify"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Record Verified",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Record"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid parameters",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                },
-                                "example": {
-                                    "error": "proof mismatch"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-	"/api/v1/scores": {
-            "post": {
-                "tags": ["Score"],
-                "description": "Create a score (rating) entry",
-                "operationId": "scoreCreate",
-                "requestBody": {
-                    "description": "Provide/Enter a score to a given entity",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-				"type": "object",
-				"description": "Score entry details",
-				"properties": {
-				    "score": {
-					"type": "object",
-					"properties": {
-					    "entity": {
-						"type": "string",
-						"description": "ID of the entity (business entity)",
-						"example": "gupta-kirana-store id"
-					    },
-					    "uid": {
-						"type": "string",
-						"description": "Identifier",
-						"example": "${application}+${seller}"
-					    },
-					    "tid": {
-						"type": "string",
-						"description": "Identifier of the transaction",
-						"example": "unique-id - uuid()"
-					    },
-					    "collector": {
-						"type": "string",
-						"description": "Id of the buyer application)",
-						"example": "${buyer-application} id"
-					    },
-					    "requestor": {
-						"type": "string",
-						"description": "Identifier of the seller application",
-						"example": "${seller-application} id"
-					    },
-					    "type": {
-						"type": "string",
-						"description": "type of the score, 'overall', or 'delivery'",
-						"example": "overall"
-					    },
-					    "score": {
-						"type": "number",
-						"description": "A floating point number between 0.1 to 5.0, to indicate the score of the user.",
-						"example": "4.2"
-					    }
-					}
-				    }
-				}
+                                "$ref": "#/components/schemas/Update_ratings"
                             }
                         }
                     },
@@ -558,13 +182,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-				    "properties": {
-					"score": {
-					    "type": "string",
-					    "description": "Score identifier"
-					}
-				    }
+                                    "$ref": "#/components/schemas/200_Res"
                                 }
                             }
                         }
@@ -575,39 +193,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Error"
-                                },
-                                "example": {
-                                    "error": "entity is required field"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-	},
-	"/api/v1/scores/{identifier}": {
-            "get": {
-                "tags": ["Score"],
-                "description": "Get score of the identifier",
-                "operationId": "scoreShow",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "identifier",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Score Identifier"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Details of the score identifier from the DB",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
                                 }
                             }
                         }
@@ -615,48 +200,100 @@
                 }
             }
         },
-        "/api/v1/scores/entity/{entity}": {
+
+        "/read-aggregate-score/{entityUid}/{ratingType}": {
             "get": {
-                "tags": ["Score"],
-                "description": "Get score of the entity (from chain)",
-                "operationId": "scoreShowEntity",
+                "tags": ["Rating"],
+                "description": "Read aggregate score",
+                "operationId": "scoreShow",
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "entity",
+                        "name": "entityUid",
                         "schema": {
                             "type": "string"
                         },
                         "required": true,
-                        "description": "Entity passed in API during entry operation"
+                        "description": "Entity Identifier"
                     },
                     {
-                        "in": "query",
-                        "name": "type",
+                        "in": "path",
+                        "name": "ratingType",
                         "schema": {
                             "type": "string"
                         },
-                        "required": false,
-                        "description": "type of the score, 'overall' or 'delivery'"
+                        "required": true,
+                        "description": "Rating type"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Details of the entity score from chain",
+                        "description": "Details of the aggregate score",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/200_Res_Aggregate"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
                                 }
                             }
                         }
                     }
                 }
             }
-	}
+        },
+
+        "/check-chain-space-usage/{chainSpaceUri}": {
+            "get": {
+                "tags": ["Rating"],
+                "description": "Check the chainspace usage",
+                "operationId": "chainUsage",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chainSpaceUri",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "chainSpace Identifier"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Chain space usage",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/200_Res_Usage"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
     "components": {
-        "securitySchemas": {
+        "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
                 "scheme": "bearer",
@@ -670,7 +307,7 @@
                     "error": {
                         "type": "string",
                         "description": "Error message",
-                        "example": "domain is required field"
+                        "example": "Error"
                     }
                 }
             },
@@ -759,6 +396,415 @@
                     }
                 }
             },
+
+            "200_Res_Revoke": {
+                "type": "object",
+                "properties": {
+                    "uri": {
+                        "type": "string",
+                        "example": "rating:cord:r36Q2YiBTn1eWRBSpR3L6gxfaNkPsD8REYYojS7JnaXBC8vXe"
+                    },
+                    "ack": {
+                        "type": "string",
+                        "example": "Rating Revoke (Debit) successful"
+                    }
+                }
+            },
+
+            "200_Res_Usage": {
+                "type": "object",
+                "properties": {
+                    "ack": {
+                        "$ref": "#/components/schemas/Ack_Get_Usage"
+                    }
+                }
+            },
+
+            "Ack_Get_Usage": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "Success"
+                    },
+                    "uri": {
+                        "type": "string",
+                        "example": "space:cord:c347wX2up174dtXXrv1weWqQwHNtqvfc2Lgh1kYZVYdgemvvr"
+                    },
+                    "creatorUri": {
+                        "type": "string",
+                        "example": "did:cord:3v3UZ7yxssQSwgwyhMKcDjqBhJgKnDH9yeiXqbiNJ6yFd4cT"
+                    },
+                    "txnCapacity": {
+                        "type": "number",
+                        "example": 1000
+                    },
+                    "txnUsage": {
+                        "type": "number",
+                        "example": 4
+                    },
+                    "approved": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "archive": {
+                        "type": "boolean",
+                        "example": false
+                    }
+                }
+            },
+
+            "200_Res_Aggregate": {
+                "type": "object",
+                "properties": {
+                    "ack": {
+                        "$ref": "#/components/schemas/Ack_Get_Aggregate"
+                    }
+                }
+            },
+
+            "Ack_Get_Aggregate": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "Success"
+                    },
+                    "entityUid": {
+                        "type": "string",
+                        "example": "286cf1b1-3e16-448f-b675-3b232e82174d"
+                    },
+                    "ratingType": {
+                        "type": "string",
+                        "example": "Overall"
+                    },
+                    "countOfTxn": {
+                        "type": "number",
+                        "example": 80
+                    },
+                    "totalRating": {
+                        "type": "number",
+                        "example": 280
+                    }
+                }
+            },
+
+            "200_Res_Login": {
+                "type": "object",
+                "properties": {
+                    "ack": {
+                        "$ref": "#/components/schemas/Ack"
+                    }
+                }
+            },
+
+            "200_Res": {
+                "type": "object",
+                "properties": {
+                    "ack": {
+                        "$ref": "#/components/schemas/Ack"
+                    }
+                }
+            },
+
+            "Ack": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "did": {
+                        "type": "string",
+                        "example": "did:cord:3vYxCfRTWVJM8WYP39KFs2FMtpfBTmSjMexRnqeLbf5dmVQF"
+                    }
+                }
+            },
+
+            "RevokeRating": {
+                "type": "object",
+                "properties": {
+                    "context": {
+                        "$ref": "#/components/schemas/Context"
+                    },
+                    "message": {
+                        "$ref": "#/components/schemas/Message-Revoke"
+                    }
+                }
+            },
+
+            "Message-Revoke": {
+                "type": "object",
+                "properties": {
+                    "messageId": {
+                        "type": "string",
+                        "example": "msg-2780214b-a614-467f-8ac9-8c897bb34a57"
+                    },
+                    "entryDigest": {
+                        "type": "string",
+                        "example": "0xaf2e4a04dc5d0a9f680207902283fc67cf1fe16f8f2ac31d10bfcac1d646ac36"
+                    },
+                    "referenceId": {
+                        "type": "string",
+                        "example": "rating:cord:r33rMi45NbJoEfz5yATYzX3uMUMjf97zo24e5fAvNF4ixtixd"
+                    },
+                    "providerSignature": {
+                        "$ref": "#/components/schemas/ProviderSignature"
+                    },
+                    "entityUid": {
+                        "type": "string",
+                        "example": "286cf1b1-3e16-448f-b675-3b232e82174d"
+                    },
+                    "providerDid": {
+                        "type": "string",
+                        "example": "did:cord:3vYxCfRTWVJM8WYP39KFs2FMtpfBTmSjMexRnqeLbf5dmVQF"
+                    }
+                }
+            },
+
+            "Write_ratings": {
+                "type": "object",
+                "properties": {
+                    "context": {
+                        "$ref": "#/components/schemas/Context"
+                    },
+                    "message": {
+                        "$ref": "#/components/schemas/Message"
+                    }
+                }
+            },
+
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "context": {
+                        "$ref": "#/components/schemas/Context"
+                    },
+                    "message": {
+                        "$ref": "#/components/schemas/Login_Message"
+                    }
+                }
+            },
+
+            "Update_ratings": {
+                "type": "object",
+                "properties": {
+                    "context": {
+                        "$ref": "#/components/schemas/Context"
+                    },
+                    "message": {
+                        "$ref": "#/components/schemas/UpdateMessage"
+                    }
+                }
+            },
+
+            "Context": {
+                "type": "object",
+                "properties": {
+                    "domain": {
+                        "type": "string",
+                        "example": "local_retail"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "action": {
+                        "type": "string",
+                        "example": "on_rating"
+                    },
+                    "core_version": {
+                        "type": "string"
+                    },
+                    "bap_id": {
+                        "type": "string"
+                    },
+                    "bap_uri": {
+                        "type": "string"
+                    },
+                    "bpp_id": {
+                        "type": "string"
+                    },
+                    "bpp_uri": {
+                        "type": "string"
+                    },
+                    "transaction_id": {
+                        "type": "string"
+                    },
+                    "message_id": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "example": "2021-06-29T10:52:01.620Z"
+                    },
+                    "key": {
+                        "type": "string"
+                    },
+                    "ttl": {
+                        "type": "string"
+                    }
+                }
+            },
+
+            "Message": {
+                "type": "object",
+                "properties": {
+                    "entry": {
+                        "$ref": "#/components/schemas/Entry"
+                    },
+                    "messageId": {
+                        "type": "string",
+                        "example": "msg-2780214b-a614-467f-8ac9-8c897bb34a57"
+                    },
+                    "entryDigest": {
+                        "type": "string",
+                        "example": "0xaf2e4a04dc5d0a9f680207902283fc67cf1fe16f8f2ac31d10bfcac1d646ac36"
+                    },
+                    "providerSignature": {
+                        "$ref": "#/components/schemas/ProviderSignature"
+                    }
+                }
+            },
+
+            "Login_Message": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Jack"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "jack@gmail.com"
+                    }
+                }
+            },
+
+            "UpdateMessage": {
+                "type": "object",
+                "properties": {
+                    "entry": {
+                        "$ref": "#/components/schemas/UpdateEntry"
+                    },
+                    "messageId": {
+                        "type": "string",
+                        "example": "msg-2780214b-a614-467f-8ac9-8c897bb34a57"
+                    },
+                    "entryDigest": {
+                        "type": "string",
+                        "example": "0xaf2e4a04dc5d0a9f680207902283fc67cf1fe16f8f2ac31d10bfcac1d646ac36"
+                    },
+                    "providerSignature": {
+                        "$ref": "#/components/schemas/ProviderSignature"
+                    }
+                }
+            },
+
+            "Entry": {
+                "type": "object",
+                "properties": {
+                    "entityUid": {
+                        "type": "string",
+                        "example": "286cf1b1-3e16-448f-b675-3b232e82174d"
+                    },
+                    "entityId": {
+                        "type": "string",
+                        "example": "Gupta Kirana Store"
+                    },
+                    "providerUid": {
+                        "type": "string",
+                        "example": "96bb9f75-0ff8-4ef8-8e2b-0d709e2c0fed"
+                    },
+                    "providerId": {
+                        "type": "string",
+                        "example": "GoFrugal"
+                    },
+                    "entityType": {
+                        "type": "string",
+                        "example": "Retail"
+                    },
+                    "ratingType": {
+                        "type": "string",
+                        "example": "Overall"
+                    },
+                    "countOfTxn": {
+                        "type": "number",
+                        "example": 100
+                    },
+                    "providerDid": {
+                        "type": "string",
+                        "example": "3vYxCfRTWVJM8WYP39KFs2FMtpfBTmSjMexRnqeLbf5dmVQF"
+                    },
+                    "totalEncodedRating": {
+                        "type": "number",
+                        "example": 3200
+                    }
+                }
+            },
+
+            "UpdateEntry": {
+                "type": "object",
+                "properties": {
+                    "entityUid": {
+                        "type": "string",
+                        "example": "286cf1b1-3e16-448f-b675-3b232e82174d"
+                    },
+                    "entityId": {
+                        "type": "string",
+                        "example": "Gupta Kirana Store"
+                    },
+                    "providerUid": {
+                        "type": "string",
+                        "example": "96bb9f75-0ff8-4ef8-8e2b-0d709e2c0fed"
+                    },
+                    "providerId": {
+                        "type": "string",
+                        "example": "GoFrugal"
+                    },
+                    "entityType": {
+                        "type": "string",
+                        "example": "Retail"
+                    },
+                    "ratingType": {
+                        "type": "string",
+                        "example": "Overall"
+                    },
+                    "countOfTxn": {
+                        "type": "number",
+                        "example": 80
+                    },
+                    "referenceId": {
+                        "type": "string",
+                        "example": "r36Q2YiBTn1eWRBSpR3L6gxfaNkPsD8REYYojS7JnaXBC8vXe"
+                    },
+                    "providerDid": {
+                        "type": "string",
+                        "example": "3vYxCfRTWVJM8WYP39KFs2FMtpfBTmSjMexRnqeLbf5dmVQF"
+                    },
+                    "totalEncodedRating": {
+                        "type": "number",
+                        "example": 2800
+                    }
+                }
+            },
+
+            "ProviderSignature": {
+                "type": "object",
+                "properties": {
+                    "signature": {
+                        "type": "string",
+                        "example": "0x29665e65e3221894aa1f67735bbfb74065c31209f8f58c5f4c16f6e5bfeaa5462f0115fe3efc768e44d1e3626ef5e26ce938320e5e2340dcf4c8af0cde80c603"
+                    },
+                    "keyUri": {
+                        "type": "string",
+                        "example": "did:cord:3vYxCfRTWVJM8WYP39KFs2FMtpfBTmSjMexRnqeLbf5dmVQF#0xace0acca34668bd9a824457c1a494cf3f4cb4f68c87b0a65cf80f67da2d1d50a"
+                    }
+                }
+            },
+
             "SchemaListing": {
                 "type": "object",
                 "properties": {
@@ -902,20 +948,17 @@
                     "publish": {
                         "type": "boolean",
                         "description": "Publish on Chain or not",
-                        "example": false,
-                        "required": false
+                        "example": false
                     },
                     "send_email": {
                         "type": "boolean",
                         "description": "Send Email about the credential issue",
-                        "example": false,
-                        "required": false
+                        "example": false
                     },
                     "issue_message": {
                         "type": "string",
                         "description": "Message from issuer to recipient",
-                        "example": "Congratulations on your degree completion",
-                        "required": false
+                        "example": "Congratulations on your degree completion"
                     },
                     "content": {
                         "$ref": "#/components/schemas/RecordContent"
@@ -981,8 +1024,7 @@
                     "url": {
                         "type": "string",
                         "description": "Verification URL for the record",
-                        "example": "https://dway.io/m/e248dfa8-0409-11ed-ba3b-138cbf9c1d66?api=1",
-                        "required": false
+                        "example": "https://dway.io/m/e248dfa8-0409-11ed-ba3b-138cbf9c1d66?api=1"
                     }
                 }
             },
